@@ -42,17 +42,17 @@
                         <div class="row clearfix">
                             <div class="col-md-6">
                                 <p class="col-red">
-                                    Jenis Surat :
+                                    Sifat Surat :
                                 </p>
-                                  <select name="jenis_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                  <select name="sifat_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                     <?php
-                                    $l_jenis = $this->db->query("SELECT * FROM ctr_jenis_surat")->result();
+                                    $l_jenis = $this->db->query("SELECT * FROM ctr_sifat_surat")->result();
                                     if (empty($l_jenis)) {
                                       echo "<option  value='-1'> --Tidak Ada Data-- </option>";
                                     } else {
-                                        foreach($l_jenis as $l_jenis_surat){
+                                        foreach($l_jenis as $l_sifat_surat){
                                             ?>
-                                            <option <?php if( $jenis_id == $l_jenis_surat->jenis_id) {echo "selected"; } ?> value='<?php echo $l_jenis_surat->jenis_id ;?>'><?php echo $l_jenis_surat->nama ;?></option>
+                                            <option <?php if( $sifat_id == $l_sifat_surat->sifat_id) {echo "selected"; } ?> value='<?php echo $l_sifat_surat->sifat_id ;?>'><?php echo $l_sifat_surat->nama ;?></option>
                                             <?php 
                                         } 
                                       }

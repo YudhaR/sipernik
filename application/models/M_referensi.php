@@ -35,9 +35,13 @@ class M_referensi extends CI_Model {
 		return $this->db->query("SELECT * FROM ctr_surat_masuk AS sm
 								 LEFT JOIN ctr_surat_ordner AS sl ON sl.surat_id=sm.surat_id WHERE sl.id IS NULL");
 	}
-	 function tampil_jenis()
+	 function tampil_sifat()
 	{
 		return $this->db->get('ctr_sifat_surat');
+	}
+	 function tampil_status()
+	{
+		return $this->db->get('ctr_status_surat');
 	}
 	 function tampil_kategori()
 	{
@@ -69,9 +73,13 @@ class M_referensi extends CI_Model {
 								 LEFT JOIN ctr_jabatan as b on a.jabatan_id=b.id ".$val. " ORDER BY b.id");
 	}
 
-	 function hapus_jenis_surat($id)
+	 function hapus_sifat_surat($id)
 	{
-		return $this->db->delete('ctr_sifat_surat', array('jenis_id' => $id));
+		return $this->db->delete('ctr_sifat_surat', array('sifat_id' => $id));
+	}
+	 function hapus_status_surat($id)
+	{
+		return $this->db->delete('ctr_status_surat', array('status_id' => $id));
 	}
 	function hapus_kategori($id)
 	{

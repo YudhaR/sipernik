@@ -228,7 +228,7 @@
                             <div class="header bg-red">
                                 <h2>
                                     Rekapitulasi Surat Masuk <i class="fa fa-envelope"></i>
-                                    <small>Berdasarkan jenis surat</small>
+                                    <small>Berdasarkan sifat surat</small>
                                 </h2>
                             </div>
                             <div class="body">

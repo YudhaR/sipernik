@@ -20,7 +20,7 @@
                                       <option  value='1'>Tanggal Surat</option>
                                       <option  value='2'>Bulanan</option>
                                       <option  value='3'>Tahunan</option>
-                                      <option  value='4'>Jenis Surat</option>
+                                      <option  value='4'>Sifat Surat</option>
                                   </select>
                             </div>
                         </div>
@@ -44,18 +44,18 @@
                                       <option  value='12'>Desember</option>
                                   </select>
                             </div>
-                            <div class="col-md-6" id="jenis_surat" hidden>
+                            <div class="col-md-6" id="sifat_surat" hidden>
                                     <p class="col-red">
-                                        Jenis Surat :
+                                        Sifat Surat :
                                     </p>
-                                      <select name="jenis_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                      <select name="sifat_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                         <?php
-                                        if (empty($jenis_surat)) {
+                                        if (empty($sifat_surat)) {
                                           echo "<option  value='-1'> --Tidak Ada Data-- </option>";
                                         } else {
-                                        foreach($jenis_surat as $js){
+                                        foreach($sifat_surat as $js){
                                         ?>
-                                       <option value='<?php echo $js->jenis_id ;?>'><?php echo $js->nama ;?></option>
+                                       <option value='<?php echo $js->sifat_id ;?>'><?php echo $js->nama ;?></option>
 
                                         <?php 
                                           } 
@@ -144,12 +144,12 @@
         $( '#range_tanggal').show();
         $( '#tahun').hide();
         $( '#bulan').hide();
-        $( '#jenis_surat').hide();
+        $( '#sifat_surat').hide();
       }else{
         $( '#range_tanggal').hide();
       }
       if (a=='2' || a=='3' ) {
-        $( '#jenis_surat').hide();
+        $( '#sifat_surat').hide();
         $( '#range_tanggal').hide();
         $( '#tahun').show();
         if (a=='3'){
@@ -162,7 +162,7 @@
         $( '#bulan').hide();
       }
       if (a=='4' ) {
-        $( '#jenis_surat').show();
+        $( '#sifat_surat').show();
         $( '#tahun').show();
         $( '#bulan').hide();
         $( '#range_tanggal').hide();

@@ -47,9 +47,9 @@ class  Info extends CI_Controller {
         	$data['msg']="Administrator :<br>
         				  <ul>
         				  	<li>Pastikan Seluruh Referensi sudah diinput sebelum menggunakan aplikasi.</li>
-        				  	<li>Referensi Jenis Surat</li>
+        				  	<li>Referensi Sifat Surat</li>
         				  	<li>Referensi Sifat Disposisi</li>
-        				  	<li>Referensi Jenis Surat</li>
+        				  	<li>Referensi Sifat Surat</li>
         				  	<li>Format Penomoran</li>
         				  	<li>Box / Ordner</li>
         				  </ul>
