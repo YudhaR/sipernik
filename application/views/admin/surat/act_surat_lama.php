@@ -73,7 +73,7 @@
                         </div>
                         <div class="row clearfix">
                             <div class="masked-input">
-                                <div class="col-md-4 col-red">
+                                <div class="col-md-6 col-red">
                                     Nomor Surat :
                                     <div class="input-group">
                                         <div class="form-line">
@@ -81,9 +81,28 @@
                                         </div>
                                     </div>      
                                 </div>
+                                <div class="col-md-5 col-red">
+                                    Status Surat :
+                                    <select name="status_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                    <?php
+                                    $l_jenis = $this->db->query("SELECT * FROM ctr_status_surat")->result();
+                                    if (empty($l_jenis)) {
+                                      echo "<option  value='-1'> --Tidak Ada Data-- </option>";
+                                    } else {
+                                        foreach($l_jenis as $l_status_surat){
+                                            ?>
+                                            <option <?php if( $status_id == $l_status_surat->status_id) {echo "selected"; } ?> value='<?php echo $l_status_surat->status_id ;?>'><?php echo $l_status_surat->nama ;?></option>
+                                            <?php 
+                                        } 
+                                      }
+                                    ?>
+                                  </select>
+                                </div>
                             </div>
+                        </div>
+                        <div class="row clearfix">
                             <?php if ($alur=='keluar'): ?>
-                            <div class="col-md-4 col-red">
+                            <div class="col-md-6 col-red">
                                     <input id="check_nomor" type="checkbox" <?php #echo ($act!='edit' ? "checked" : " " );?> checked> Format Surat <?php echo $alur ?>
                                     <select name="format_nomor" id="format" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                     <?php

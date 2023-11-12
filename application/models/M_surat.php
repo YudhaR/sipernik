@@ -37,11 +37,12 @@ class M_surat extends CI_Model {
 				$join="";
 			}
 			
-			$sql =  "SELECT a.*".$select.",b.sifat_id, b.nama,b.kode,d1.dari,d1.kepada,(c.jabatan) AS dari_nama,(e.jabatan) AS kepada_nama, l.id AS ordner_id,l.nama AS nama_bundle, sl.tgl_ordner 
+			$sql =  "SELECT a.*".$select.",b.sifat_id, b.nama AS sifat_nama, st.nama AS status_nama,b.kode,d1.dari,d1.kepada,(c.jabatan) AS dari_nama,(e.jabatan) AS kepada_nama, l.id AS ordner_id,l.nama AS nama_bundle, sl.tgl_ordner 
 					FROM ctr_surat_".$alur. " as a
 					LEFT JOIN ctr_disposisi AS d1 ON a.surat_id=d1.surat_id
 					LEFT JOIN ctr_disposisi AS d2 ON a.surat_id=d2.surat_id AND d2.id > d1.id
-					LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id 
+					LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id
+					LEFT JOIN ctr_status_surat AS st ON a.status_id=st.status_id  
 					LEFT JOIN ctr_jabatan AS c ON d1.dari=c.id
 					LEFT JOIN ctr_jabatan AS e ON d1.kepada=e.id
 					LEFT JOIN ctr_surat_ordner AS sl ON a.surat_id=sl.surat_id
@@ -86,11 +87,12 @@ class M_surat extends CI_Model {
 				$join="";
 			}
 			
-			$sql =  "SELECT a.*".$select.",b.sifat_id, b.nama,k.kategori,b.kode,d1.dari,d1.kepada,f.jabatan,(c.jabatan) AS dari_nama,(e.jabatan) AS kepada_nama, l.id AS ordner_id,l.nama AS nama_bundle, sl.tgl_ordner 
+			$sql =  "SELECT a.*".$select.",b.sifat_id, b.nama AS sifat_nama, st.nama AS status_nama,k.kategori,b.kode,d1.dari,d1.kepada,f.jabatan,(c.jabatan) AS dari_nama,(e.jabatan) AS kepada_nama, l.id AS ordner_id,l.nama AS nama_bundle, sl.tgl_ordner 
 					FROM ctr_surat_keluar_baru". " as a
 					LEFT JOIN ctr_disposisi AS d1 ON a.surat_id=d1.surat_id
 					LEFT JOIN ctr_disposisi AS d2 ON a.surat_id=d2.surat_id AND d2.id > d1.id
 					LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id 
+					LEFT JOIN ctr_status_surat AS st ON a.status_id=st.status_id 
 					LEFT JOIN ctr_kategori_surat AS k ON a.kategori_id=k.id_kategori 
 					LEFT JOIN format_nomor_surat AS f ON a.format_no_surat_id=f.id 
 					LEFT JOIN ctr_jabatan AS c ON d1.dari=c.id
@@ -143,6 +145,7 @@ class M_surat extends CI_Model {
 					FROM ctr_surat_".$alur. " as a
 					LEFT JOIN (SELECT * FROM ctr_disposisi WHERE (SELECT MAX(kepada) FROM ctr_disposisi)=".$jabatan_id.") AS d1 ON d1.`surat_id`=a.surat_id
 					LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id 
+					LEFT JOIN ctr_status_surat AS st ON a.status_id=st.status_id 
 					LEFT JOIN ctr_jabatan AS c ON d1.dari=c.id
 					LEFT JOIN ctr_jabatan AS e ON d1.kepada=e.id
 					LEFT JOIN ctr_surat_ordner AS sl ON a.surat_id=sl.surat_id
@@ -235,6 +238,17 @@ class M_surat extends CI_Model {
 		return $q;
 	}
 
+	function get_status_surat($status_id=NULL)
+	{
+		$status_id="";
+		if ($status_id != NULL){
+				$q= $this->db->query("SELECT * from ctr_status_surat WHERE status_id=$status_id");
+		}else{
+				$q= $this->db->query("SELECT * from ctr_status_surat");
+		}
+		return $q;
+	}
+
 	function get_jabatan()
 	{
 		$q= $this->db->query("SELECT * FROM ctr_jabatan ORDER BY urutan ASC");
@@ -277,7 +291,7 @@ class M_surat extends CI_Model {
 		return $this->db->query("SELECT DISTINCT(YEAR(tgl_surat)) as tahun FROM ctr_surat_".$alur." ORDER BY tgl_surat DESC");
 	}
 
-	function tampil_agenda($alur=NULL,$jenis_cetak=NULL,$mulai=NULL,$sampai=NULL,$bulan=NULL,$tahun=NULL,$sifat_surat=NULL)
+	function tampil_agenda($alur=NULL,$jenis_cetak=NULL,$mulai=NULL,$sampai=NULL,$bulan=NULL,$tahun=NULL,$sifat_surat=NULL, $status_surat=NULL)
 	{
 		if ($jenis_cetak=='1'){
 			$where=" WHERE a.tgl_surat >= '".$mulai."' AND a.tgl_surat <= '".$sampai."'";
@@ -300,6 +314,12 @@ class M_surat extends CI_Model {
 				$where=" WHERE year(a.tgl_terima) = '".$tahun."' AND a.sifat_id=$sifat_surat ";
 			}elseif($alur=='keluar'){
 				$where=" WHERE year(a.tgl_surat) = '".$tahun."' AND a.sifat_id=$sifat_surat ";
+			}
+		}else if ($jenis_cetak=='5'){
+			if($alur=='masuk'){
+				$where=" WHERE year(a.tgl_terima) = '".$tahun."' AND a.status_id=$status_surat ";
+			}elseif($alur=='keluar'){
+				$where=" WHERE year(a.tgl_surat) = '".$tahun."' AND a.status_id=$status_surat ";
 			}
 		}
 		return $this->db->query("SELECT a.*, b.sifat_id, b.nama,b.kode FROM ctr_surat_".$alur. " as a
