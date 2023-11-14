@@ -47,7 +47,12 @@
 
                 echo '<tr><td><b>Nomor Agenda</b></td><td>' . $no_agenda . '</td></tr>';
                 echo '<tr><td><b>Kode Surat</b></td><td>' . $kode . '/' . $nama . '</td></tr>';
-                echo '<tr><td><b>Kategori Surat</b></td><td>' . $kategori . '</td></tr>';
+                if ($alur == "masuk") {
+                  echo '<tr><td><b>Status Surat</b></td><td>' . $status . '</td></tr>';
+                  echo '<tr><td><b>Jenis Surat</b></td><td>' . $jenis . '</td></tr>';
+                } else if ($alur == "keluar") {
+                  echo '<tr><td><b>Kategori Surat</b></td><td>' . $kategori . '</td></tr>';
+                }
                 echo '<tr><td><b>Tanggal Surat</b></td><td>' . $tgl_surat . '</td></tr>';
                 echo '<tr><td><b>Diterima Bagian Umum</b></td><td>' . $tgl_terima . '</td></tr>';
                 echo '<tr><td><b>Pengirim</b></td><td><pre>' . $pengirim . '</pre></td></tr>';

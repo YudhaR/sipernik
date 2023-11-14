@@ -34,8 +34,10 @@ class M_surat extends CI_Model {
 				$join="LEFT JOIN ctr_ekspedisi as eks ON a.ekspedisi=eks.id
 				LEFT JOIN ctr_jenis_surat AS b ON a.jenis_id=b.jenis_id";
 			}elseif ($alur=="masuk"){
-				$select=",b.sifat_id, b.nama,b.kode";
-				$join="LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id";
+				$select=",b.sifat_id, b.nama,b.kode,st.jenis,sy.status";
+				$join="LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id
+				LEFT JOIN ctr_jenis_surat_masuk AS st ON a.jenis_surat_masuk_id=st.jenis_surat_masuk_id
+				LEFT JOIN ctr_status_surat AS sy ON a.status_id=sy.status_id";
 			}else{
 				$select=",b.jenis_id, b.nama,b.kode";
 				$join="LEFT JOIN ctr_jenis_surat AS b ON a.jenis_id=b.jenis_id";

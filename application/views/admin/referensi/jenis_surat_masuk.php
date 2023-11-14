@@ -3,10 +3,10 @@
         <div class="card">
             <div class="header text-center">
                 <h2 class="text-center col-blue-grey">
-                    <i class="icon fa fa-book"> </i> REFERENSI JENIS SURAT KELUAR
+                    <i class="icon fa fa-book"> </i> REFERENSI JENIS SURAT MASUK
                 </h2>
                 <ul class="header-dropdown m-r-0 animated flipInX">
-                  <a href="<?php echo base_url(); ?>Referensi/jenis_surat/tambah" class="btn btn-primary" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-edit"></i> Tambah</a>
+                  <a href="<?php echo base_url(); ?>Referensi/jenis_surat_masuk/tambah" class="btn btn-primary" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-edit"></i> Tambah</a>
                 </ul>
             </div>
             <div class="row clearfix">          	
@@ -16,14 +16,12 @@
                       <thead>
                         <tr class="bg-blue">
                           <th>No</th>
-                          <th>Kode Surat</th>
-                          <th>Jenis Surat Keluar</th>
+                          <th>Jenis Surat Masuk</th>
                           <th style="width:20px;">Aksi</th>
                       </thead>
-                      <col width="5%">
                       <col width="10%">
-                      <col width="40%">
-                      <col width="5%">
+                      <col width="80%">
+                      <col width="10%">
                       <tbody>
                         	<?php  
                           $no = 1;
@@ -31,17 +29,16 @@
                           ?>
                       	<tr>
                           <td><?php echo $no++ ?></td>
-                          <td><?php echo ucwords($lihat->kode)?></td>
-                      		<td><?php echo ucwords($lihat->nama)?></td>
+                      		<td><?php echo ucwords($lihat->jenis)?></td>
                           <td align="center">
                               <div class="btn-group">
                                 <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bars"></i>
                                 </button>
                                 <ul class="dropdown-menu" role="menu" style="left:-100px">
-                                    <li><a href="<?php echo base_url(); ?>Referensi/jenis_surat/edit/<?php echo base64_encode($this->encrypt->encode($lihat->jenis_id)) ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-edit"></i> Edit</a></li>
+                                    <li><a href="<?php echo base_url(); ?>Referensi/jenis_surat_masuk/edit/<?php echo base64_encode($this->encrypt->encode($lihat->id_jenis_surat_masuk)) ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-edit"></i> Edit</a></li>
                                     <li class="divider"></li>
-                                    <li><a class="text-red" data-toggle="modal" href="#" data-href="<?php echo base_url(); ?>referensi/jenis_surat/hapus/<?php echo base64_encode($this->encrypt->encode($lihat->jenis_id)) ?>" data-target="#confirm-delete" ><i class="fa fa-trash"></i> Hapus</a></li>
+                                    <li><a class="text-red" data-toggle="modal" href="#" data-href="<?php echo base_url(); ?>referensi/jenis_surat_masuk/hapus/<?php echo base64_encode($this->encrypt->encode($lihat->id_jenis_surat_masuk)) ?>" data-target="#confirm-delete" ><i class="fa fa-trash"></i> Hapus</a></li>
                                 </ul>
                               </div>
                           </td>                  		

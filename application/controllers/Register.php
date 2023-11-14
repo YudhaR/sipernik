@@ -117,6 +117,8 @@ class Register extends CI_Controller
 					$data['untuk']				= 'Ketua ' . $data[0]->kode_pn;
 					$data['pengirim']			= '';
 					$data['sifat_id']			= '';
+					$data['status_id']			= '';
+					$data['jenis_surat_masuk_id']			= '';
 				}
 				// $data['balasan']			='-';
 				$data['format_surat']		= '';
@@ -173,6 +175,8 @@ class Register extends CI_Controller
 					$data['no_agenda']			= $row_masuk[0]->surat_id;
 					// $data['balasan']			= $row_masuk[0]->balasan;
 					$data['sifat_id']			= $row_masuk[0]->sifat_id;
+					$data['status_id']			= $row_masuk[0]->status_id;
+					$data['jenis_surat_masuk_id']= $row_masuk[0]->jenis_surat_masuk_id;
 					$data['kategori_id']			= $row_masuk[0]->kategori_id;
 					$data['tgl_surat']			= $this->tanggalhelper->convertToInputDate($row_masuk[0]->tgl_surat);
 					$data['tgl_terima']			= $this->tanggalhelper->convertToInputDate($row_masuk[0]->tgl_terima);
@@ -212,6 +216,8 @@ class Register extends CI_Controller
 					$data['untuk']				= 'Ketua ' . $data[0]->kode_pn;
 					$data['pengirim']			= '';
 					$data['sifat_id']			= '';
+					$data['status_id']			= '';
+					$data['jenis_surat_masuk_id']			= '';
 				}
 				// $data['balasan']			='-';
 				$data['format_surat']		= '';
@@ -243,6 +249,8 @@ class Register extends CI_Controller
 					$data['format_surat']		= '';
 					$data['format_surat_id'] 	= '';
 					$data['sifat_id']			= $row[0]->sifat_id;
+					$data['status_id']			= $row[0]->status_id;
+					$data['jenis_surat_masuk_id']= $row[0]->jenis_surat_masuk_id;
 				}
 				$data['no_agenda']			= $row[0]->surat_id;
 				// $data['balasan']			= $row[0]->balasan;
@@ -362,6 +370,8 @@ class Register extends CI_Controller
 					$data['enc']				= $enc;
 					if ($alur == 'masuk') {
 						$data['title']				= "DIPSOSISI SURAT NOMOR " . $row[0]->no_surat;
+						$data['status']				= $row[0]->status;
+						$data['jenis']				= $row[0]->jenis;
 					} else {
 						$data['title']				= "DETIL SURAT NOMOR " . $row[0]->no_surat;
 					}
@@ -517,6 +527,8 @@ class Register extends CI_Controller
 					$data['jenis_id']			= '';
 				} else if ($alur == "masuk") {
 					$data['sifat_id']			= '';
+					$data['status_id']			= '';
+					$data['jenis_surat_masuk_id']			= '';
 				}
 				$data['kepada']			= '';
 				$data['no_surat']			= '';
@@ -568,6 +580,8 @@ class Register extends CI_Controller
 				$data['enc']				= $enc;
 				if ($alur == 'masuk') {
 					$data['title']				= "DIPSOSISI SURAT NOMOR " . $row[0]->no_surat;
+					$data['status']				= $row[0]->status;
+					$data['jenis']				= $row[0]->jenis;
 				} else {
 					$data['title']				= "DETIL SURAT NOMOR " . $row[0]->no_surat;
 				}
@@ -587,6 +601,8 @@ class Register extends CI_Controller
 		$ekspedisi = $this->input->post('ekspedisi', TRUE);
 		if ($alur == "masuk") {
 			$sifat_id = $this->input->post('sifat_surat', TRUE);
+			$status_id = $this->input->post('status_surat', TRUE);
+			$jenis_surat_masuk_id = $this->input->post('jenis_surat_masuk', TRUE);
 		} else if ($alur == "keluar") {
 			$jenis_id = $this->input->post('jenis_surat', TRUE);
 		}
@@ -652,6 +668,8 @@ class Register extends CI_Controller
 				$data['format_no_surat_id'] = $format_no_surat_id;
 			} else if ($alur == "masuk"){
 				$data['sifat_id'] = $sifat_id;
+				$data['status_id'] = $status_id;
+				$data['jenis_surat_masuk_id'] = $jenis_surat_masuk_id;
 			}
 		} else {
 			$data_file = array('upload_data' => $this->upload->data());
@@ -677,6 +695,8 @@ class Register extends CI_Controller
 				$data['format_no_surat_id'] = $format_no_surat_id;
 			} else if ($alur == "masuk"){
 				$data['sifat_id'] = $sifat_id;
+				$data['status_id'] = $status_id;
+				$data['jenis_surat_masuk_id'] = $jenis_surat_masuk_id;
 			}
 		}
 
@@ -712,6 +732,8 @@ class Register extends CI_Controller
 		$ekspedisi = $this->input->post('ekspedisi', TRUE);
 		if ($alur == "masuk") {
 			$sifat_id = $this->input->post('sifat_surat', TRUE);
+			$status_id = $this->input->post('status_surat', TRUE);
+			$jenis_surat_masuk_id = $this->input->post('jenis_surat_masuk', TRUE);
 		} else if ($alur == "keluar") {
 			$jenis_id = $this->input->post('jenis_surat', TRUE);
 		}
@@ -760,6 +782,8 @@ class Register extends CI_Controller
 				$data['format_nomor_id'] = $format_id[0]->id;
 			} else if ($alur == "masuk"){
 				$data['sifat_id'] = $sifat_id;
+				$data['status_id'] = $status_id;
+				$data['jenis_surat_masuk_id'] = $jenis_surat_masuk_id;
 			}
 		} else {
 			$data_file = array('upload_data' => $this->upload->data());
@@ -783,6 +807,8 @@ class Register extends CI_Controller
 				$data['format_nomor_id'] = $format_id[0]->id;
 			} else if ($alur == "masuk"){
 				$data['sifat_id'] = $sifat_id;
+				$data['status_id'] = $status_id;
+				$data['jenis_surat_masuk_id'] = $jenis_surat_masuk_id;
 			}
 		}
 		if ($act == 'insert_surat_lama') {

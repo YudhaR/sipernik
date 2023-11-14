@@ -47,6 +47,14 @@ class M_referensi extends CI_Model {
 	{
 		return $this->db->get('ctr_kategori_surat');
 	}
+	 function tampil_jenis_surat_masuk()
+	{
+		return $this->db->get('ctr_jenis_surat_masuk');
+	}
+	 function tampil_status_surat()
+	{
+		return $this->db->get('ctr_status_surat');
+	}
 
 	 function tampil_sifat_disposisi()
 	{
@@ -84,6 +92,14 @@ class M_referensi extends CI_Model {
 	function hapus_kategori($id)
 	{
 		return $this->db->delete('ctr_kategori_surat', array('id_kategori' => $id));
+	}
+	function hapus_jenis_surat_masuk($id)
+	{
+		return $this->db->delete('ctr_jenis_surat_masuk', array('id_jenis_surat_masuk' => $id));
+	}
+	function hapus_status_surat($id)
+	{
+		return $this->db->delete('ctr_status_surat', array('id_status_surat' => $id));
 	}
 	 function hapus_jabatan($id)
 	{

@@ -134,7 +134,54 @@
                                     </div>
                             </div>
                             <?php endif?>
-                        </div>
+                            <?php if ($alur == "masuk") {
+                                ?>
+                                <div class="col-md-3 col-red">
+                                    <p class="">
+                                        Status Surat :
+                                    </p>
+                                    <select name="status_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                        <?php
+                                        $l_status = $this->db->query("SELECT * FROM ctr_status_surat")->result();
+                                        if (empty($l_status)) {
+                                            echo "<option  value='-1'> --Tidak Ada Data-- </option>";
+                                        } else {
+                                            foreach ($l_status as $l_status_surat) {
+                                        ?>
+                                                <option <?php if ($status_id == $l_status_surat->status_id) {
+                                                            echo "selected";
+                                                        } ?> value='<?php echo $l_status_surat->status_id; ?>'><?php echo $l_status_surat->status; ?></option>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-red">
+                                    <p class="">
+                                        Jenis Surat Masuk:
+                                    </p>
+                                    <select name="jenis_surat_masuk" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                        <?php
+                                        $l_jenis_surat_masuk = $this->db->query("SELECT * FROM ctr_jenis_surat_masuk")->result();
+                                        if (empty($l_jenis_surat_masuk)) {
+                                            echo "<option  value='-1'> --Tidak Ada Data-- </option>";
+                                        } else {
+                                            foreach ($l_jenis_surat_masuk as $l_jenis_surat_masuk_surat) {
+                                        ?>
+                                                <option <?php if ($jenis_surat_masuk_id == $l_jenis_surat_masuk_surat->jenis_surat_masuk_id) {
+                                                            echo "selected";
+                                                        } ?> value='<?php echo $l_jenis_surat_masuk_surat->jenis_surat_masuk_id; ?>'><?php echo $l_jenis_surat_masuk_surat->jenis; ?></option>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                        </div>            
+                            <?php
+                            }
+                            ?>
                         <div class="row clearfix">
                             <div class="col-md-6 col-red">
                                 Pengirim / Dari :

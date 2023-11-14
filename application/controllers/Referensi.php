@@ -56,11 +56,91 @@ class Referensi extends CI_Controller {
 		 }
 	 }
 
+	function jenis_surat_masuk($act=NULL,$enc=NULL){
+		if ($act==NULL) {
+			 $a['data']	= $this->referensi->tampil_jenis_surat_masuk()->result_object();
+			 $a['page']	= "admin/referensi/jenis_surat_masuk";
+			 $a['title']	= "Referensi Jenis Surat Masuk";
+			 $this->load->vars($a);
+			 $a['harus_disposisi']=$this->persuratan->harus_disposisi('masuk')->num_rows();
+			 $a['belum_disposisi']=$this->persuratan->belum_disposisi()->num_rows();
+ 
+			 $this->load->view('pages/pages',$a);
+		 }else{
+			 if ($act=='edit') {
+				 $id=$this->encrypt->decode(base64_decode($enc));
+				 $data	= $this->db->get_where('ctr_jenis_surat_masuk',array('id_jenis_surat_masuk'=>$id))->result_object();
+				//  print_r($data);
+				//  die();
+				 $a['enc']=base64_encode($this->encrypt->encode($data[0]->id_jenis_surat_masuk));
+				 $a['jenis']=$data[0]->jenis;
+				 $a['act']='update';
+				 $a['title']	= "Edit Jenis Surat Masuk";
+				 $this->load->vars($a);
+				 $this->load->view('admin/referensi/act_jenis_surat_masuk',$a);
+			 }
+			 if ($act=='tambah'){
+				 $a['kode']='';
+				 $a['jenis']='';
+				 $a['enc']='';
+				 $a['act']='insert';
+				 $a['title']	= "Tambah Jenis Surat Masuk";
+				 $this->load->vars($a);
+				 $this->load->view('admin/referensi/act_jenis_surat_masuk',$a);
+			 }
+			 if ($act=='hapus'){
+				 $id = $this->encrypt->decode(base64_decode($enc));
+				 $this->referensi->hapus_jenis_surat_masuk($id);
+				 redirect('Referensi/jenis_surat_masuk/','refresh');
+			 }
+		 }
+	 }
+
+	function status_surat($act=NULL,$enc=NULL){
+		if ($act==NULL) {
+			 $a['data']	= $this->referensi->tampil_status_surat()->result_object();
+			 $a['page']	= "admin/referensi/status_surat";
+			 $a['title']	= "Referensi Status Surat";
+			 $this->load->vars($a);
+			 $a['harus_disposisi']=$this->persuratan->harus_disposisi('masuk')->num_rows();
+			 $a['belum_disposisi']=$this->persuratan->belum_disposisi()->num_rows();
+ 
+			 $this->load->view('pages/pages',$a);
+		 }else{
+			 if ($act=='edit') {
+				 $id=$this->encrypt->decode(base64_decode($enc));
+				 $data	= $this->db->get_where('ctr_status_surat',array('id_status_surat'=>$id))->result_object();
+				//  print_r($data);
+				//  die();
+				 $a['enc']=base64_encode($this->encrypt->encode($data[0]->id_status_surat));
+				 $a['status']=$data[0]->status;
+				 $a['act']='update';
+				 $a['title']	= "Edit Status Surat";
+				 $this->load->vars($a);
+				 $this->load->view('admin/referensi/act_status_surat',$a);
+			 }
+			 if ($act=='tambah'){
+				 $a['kode']='';
+				 $a['status']='';
+				 $a['enc']='';
+				 $a['act']='insert';
+				 $a['title']	= "Tambah Status Surat";
+				 $this->load->vars($a);
+				 $this->load->view('admin/referensi/act_status_surat',$a);
+			 }
+			 if ($act=='hapus'){
+				 $id = $this->encrypt->decode(base64_decode($enc));
+				 $this->referensi->hapus_status_surat($id);
+				 redirect('Referensi/status_surat/','refresh');
+			 }
+		 }
+	 }
+
 	function jenis_surat($act=NULL,$enc=NULL){
        if ($act==NULL) {
 			$a['data']	= $this->referensi->tampil_jenis()->result_object();
 			$a['page']	= "admin/referensi/jenis_surat";
-			$a['title']	= "Referensi Jenis Surat";
+			$a['title']	= "Referensi Jenis Surat Keluar";
 			$this->load->vars($a);
 			$a['harus_disposisi']=$this->persuratan->harus_disposisi('masuk')->num_rows();
 			$a['belum_disposisi']=$this->persuratan->belum_disposisi()->num_rows();
@@ -74,7 +154,7 @@ class Referensi extends CI_Controller {
 				$a['kode']=$data[0]->kode;
 				$a['nama']=$data[0]->nama;
 				$a['act']='update';
-				$a['title']	= "Edit Jenis Surat";
+				$a['title']	= "Edit Jenis Surat Keluar";
 				$this->load->vars($a);
 				$this->load->view('admin/referensi/act_jenis_surat',$a);
 			}
@@ -83,7 +163,7 @@ class Referensi extends CI_Controller {
 				$a['nama']='';
 				$a['enc']='';
 				$a['act']='insert';
-				$a['title']	= "Tambah Jenis Surat";
+				$a['title']	= "Tambah Jenis Surat Keluar";
 				$this->load->vars($a);
 				$this->load->view('admin/referensi/act_jenis_surat',$a);
 			}
@@ -142,6 +222,22 @@ class Referensi extends CI_Controller {
 			$this->db->insert('ctr_kategori_surat', $object);
 			redirect('Referensi/kategori_surat','refresh');
 	}
+	function insert_jenis_surat_masuk(){
+			$jenis= $this->input->post('jenis');
+			$object = array(
+					'jenis' => $jenis,
+				);
+			$this->db->insert('ctr_jenis_surat_masuk', $object);
+			redirect('Referensi/jenis_surat_masuk','refresh');
+	}
+	function insert_status_surat(){
+			$status= $this->input->post('status');
+			$object = array(
+					'status' => $status,
+				);
+			$this->db->insert('ctr_status_surat', $object);
+			redirect('Referensi/status_surat','refresh');
+	}
 	function update_kategori_surat(){
         $id = $this->encrypt->decode(base64_decode($this->input->post('enc')));
 		$kategori= $this->input->post('kategori');
@@ -152,6 +248,28 @@ class Referensi extends CI_Controller {
 		$this->db->update('ctr_kategori_surat', $object); 
 
 		redirect('Referensi/kategori_surat','refresh');
+	}
+	function update_jenis_surat_masuk(){
+        $id = $this->encrypt->decode(base64_decode($this->input->post('enc')));
+		$jenis= $this->input->post('jenis');
+		$object = array(
+				'jenis' => $jenis,
+			);
+		$this->db->where('id_jenis_surat_masuk', $id);
+		$this->db->update('ctr_jenis_surat_masuk', $object); 
+
+		redirect('Referensi/jenis_surat_masuk','refresh');
+	}
+	function update_status_surat(){
+        $id = $this->encrypt->decode(base64_decode($this->input->post('enc')));
+		$status= $this->input->post('status');
+		$object = array(
+				'status' => $status,
+			);
+		$this->db->where('id_status_surat', $id);
+		$this->db->update('ctr_status_surat', $object); 
+
+		redirect('Referensi/status_surat','refresh');
 	}
 	function insert_jenis_surat(){
 
@@ -179,6 +297,16 @@ class Referensi extends CI_Controller {
 		$id = $this->encrypt->decode(base64_decode($enc));
 	   $this->referensi->hapus_kategori($id);
 	   redirect('Referensi/kategori_surat','refresh');
+   }
+	function hapus_jenis_surat_masuk($enc){
+		$id = $this->encrypt->decode(base64_decode($enc));
+	   $this->referensi->hapus_jenis_surat_masuk($id);
+	   redirect('Referensi/jenis_surat_masuk','refresh');
+   }
+	function hapus_status_surat($enc){
+		$id = $this->encrypt->decode(base64_decode($enc));
+	   $this->referensi->hapus_status_surat($id);
+	   redirect('Referensi/status_surat','refresh');
    }
 	
 
