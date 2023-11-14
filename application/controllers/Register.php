@@ -385,8 +385,7 @@ class Register extends CI_Controller
 					$data['jabatan'] = $this->persuratan->get_jabatan();
 					$data['petunjuk_disposisi'] = $this->persuratan->get_petunjuk_disposisi();
 					$data['tgl_disposisi']			= date("d/m/Y");
-					$data['isi_disposisi']			= "";
-					$data['keterangan']			= "";
+					$data['catatan']			= "";
 					$data['enc']				= $enc;
 					$data['enc_disposisi']		= '';
 					$data['act']				= "insert";
@@ -401,8 +400,7 @@ class Register extends CI_Controller
 					$data['jabatan'] = $this->persuratan->get_jabatan();
 					$data['petunjuk_disposisi'] = $this->persuratan->get_petunjuk_disposisi();
 					$data['tgl_disposisi']			= date("d/m/Y");
-					$data['isi_disposisi']			= "";
-					$data['keterangan']			= "";
+					$data['catatan']			= "";
 					$data['enc']				= $enc;
 					$data['enc_disposisi']		= '';
 					$data['act']				= "insert";
@@ -419,8 +417,7 @@ class Register extends CI_Controller
 					$data['kepada'] = $disposisi[0]->kepada;
 					$data['petunjuk_disposisi'] = $this->persuratan->get_petunjuk_disposisi();
 					$data['tgl_disposisi']			= $this->tanggalhelper->convertToInputDate($disposisi[0]->tgl_disposisi);
-					$data['isi_disposisi']			= $disposisi[0]->isi_disposisi;
-					$data['keterangan']			= $disposisi[0]->ket_disposisi;
+					$data['catatan']			= $disposisi[0]->catatan;
 					$data['enc_disposisi']		= base64_encode($this->encrypt->encode($disposisi[0]->id));
 					$data['enc']				= $enc;
 					$data['act']				= "update";
@@ -862,17 +859,15 @@ class Register extends CI_Controller
 		$dari = $this->input->post('dari');
 		$kepada = $this->input->post('kepada');
 		$tgl_disposisi = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_disposisi'));
-		$isi_disposisi = $this->input->post('isi_disposisi');
+		$catatan = $this->input->post('catatan');
 		$petunjuk = $this->input->post('petunjuk');
-		$ket_disposisi = $this->input->post('ket_disposisi');
 		$object = array(
 			'surat_id' => $surat_id,
 			'dari' => $dari,
 			'kepada' => $kepada,
 			'tgl_disposisi' => $tgl_disposisi,
-			'isi_disposisi' => $isi_disposisi,
+			'catatan' => $catatan,
 			'petunjuk' => $petunjuk,
-			'ket_disposisi' => $ket_disposisi
 		);
 		$update_surat = array('status_disposisi' => $dari);
 		$this->db->insert('ctr_disposisi', $object);
@@ -888,17 +883,15 @@ class Register extends CI_Controller
 		$dari = $this->input->post('dari');
 		$kepada = $this->input->post('dari');
 		$tgl_disposisi = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_diterima'));
-		$isi_disposisi = $this->input->post('catatan_diterima');
+		$catatan = $this->input->post('catatan_diterima');
 		$petunjuk = 100;
-		$ket_disposisi = $this->input->post('ket_disposisi');
 		$object = array(
 			'surat_id' => $surat_id,
 			'dari' => $dari,
 			'kepada' => $kepada,
 			'tgl_disposisi' => $tgl_disposisi,
-			'isi_disposisi' => $isi_disposisi,
+			'catatan' => $catatan,
 			'petunjuk' => $petunjuk,
-			'ket_disposisi' => $ket_disposisi
 		);
 		$update_surat = array('status_diterima' => $dari);
 		$update_disposisi = array('status_disposisi' => $dari);
@@ -916,17 +909,15 @@ class Register extends CI_Controller
 		$dari = $this->input->post('dari');
 		$kepada = $this->input->post('kepada');
 		$tgl_disposisi = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_disposisi'));
-		$isi_disposisi = $this->input->post('isi_disposisi');
+		$catatan = $this->input->post('catatan');
 		$petunjuk = $this->input->post('petunjuk');
-		$ket_disposisi = $this->input->post('ket_disposisi');
 		$object = array(
 			'surat_id' => $surat_id,
 			'dari' => $dari,
 			'kepada' => $kepada,
 			'tgl_disposisi' => $tgl_disposisi,
-			'isi_disposisi' => $isi_disposisi,
+			'catatan' => $catatan,
 			'petunjuk' => $petunjuk,
-			'ket_disposisi' => $ket_disposisi
 		);
 		$this->db->where('id', $disposisi_id);
 		$this->db->update('ctr_disposisi', $object);

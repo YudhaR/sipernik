@@ -69,20 +69,10 @@
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-12 col-red">
-                                <b>Ringkasan Isi Disposisi :</b>
+                                <b>Catatan :</b>
                                 <div class="input-group">
                                     <div class="form-line">
-                                        <textarea class="form-control no-resize auto-growth" style="overflow: hidden; overflow-wrap: break-word; height: 32px;" placeholder="ENTER untuk menambah baris" rows="1"  class="form-control" placeholder="" name="isi_disposisi" required><?php echo $isi_disposisi;?></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="col-md-12">
-                                <b>Keterangan :</b>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <textarea class="form-control no-resize auto-growth" style="overflow: hidden; overflow-wrap: break-word; height: 32px;" placeholder="ENTER untuk menambah baris" rows="1"  class="form-control" name="keterangan" placeholder=""><?php echo $keterangan;?></textarea>
+                                        <textarea class="form-control no-resize auto-growth" style="overflow: hidden; overflow-wrap: break-word; height: 32px;" placeholder="ENTER untuk menambah baris" rows="1"  class="form-control" placeholder="" name="catatan" required><?php echo $catatan;?></textarea>
                                     </div>
                                 </div>
                             </div>
