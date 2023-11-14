@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2023 at 03:41 PM
--- Server version: 5.6.26
--- PHP Version: 5.6.12
+-- Generation Time: Nov 14, 2023 at 03:30 PM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -24,8 +26,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `JumlahHari`(`tgl1` DATE, `tgl2` DATE)
-SELECT dd.iBedaHari, dd.iBedaHari - dd.iAkhirMinggu AS iHariKerja, dd.iAkhirMinggu 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `JumlahHari` (`tgl1` DATE, `tgl2` DATE)  SELECT dd.iBedaHari, dd.iBedaHari - dd.iAkhirMinggu AS iHariKerja, dd.iAkhirMinggu 
 FROM ( 
   SELECT 
     dd.iBedaHari, 
@@ -55,13 +56,13 @@ DELIMITER ;
 -- Table structure for table `ctr_barang`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_barang` (
+CREATE TABLE `ctr_barang` (
   `id` bigint(20) NOT NULL,
   `kode_barang` varchar(20) NOT NULL,
   `uraian` varchar(255) NOT NULL,
   `satuan` varchar(50) NOT NULL,
   `jumlah` int(11) DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_barang`
@@ -79,7 +80,7 @@ INSERT INTO `ctr_barang` (`id`, `kode_barang`, `uraian`, `satuan`, `jumlah`) VAL
 -- Table structure for table `ctr_disposisi`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_disposisi` (
+CREATE TABLE `ctr_disposisi` (
   `id` int(5) NOT NULL,
   `surat_id` int(5) NOT NULL,
   `dari` int(2) DEFAULT NULL,
@@ -90,16 +91,26 @@ CREATE TABLE IF NOT EXISTS `ctr_disposisi` (
   `ket_disposisi` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ctr_disposisi`
+--
+
+INSERT INTO `ctr_disposisi` (`id`, `surat_id`, `dari`, `kepada`, `tgl_disposisi`, `isi_disposisi`, `sifat`, `ket_disposisi`) VALUES
+(1, 1, -1, 2, '2023-11-14', 'dzsdzsd', '5', NULL),
+(2, 1, 1, 2, '2023-11-14', 'vsfsdfsdfsd', '6', NULL),
+(3, 1, 1, 3, '2023-11-14', 'asfdsf', '4', NULL),
+(4, 1, 1, 3, '2023-11-14', 'l/kl/k', '5', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `ctr_ekspedisi`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_ekspedisi` (
+CREATE TABLE `ctr_ekspedisi` (
   `id` smallint(6) NOT NULL,
   `nama` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_ekspedisi`
@@ -117,11 +128,11 @@ INSERT INTO `ctr_ekspedisi` (`id`, `nama`) VALUES
 -- Table structure for table `ctr_jabatan`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_jabatan` (
+CREATE TABLE `ctr_jabatan` (
   `id` int(2) NOT NULL,
   `jabatan` varchar(50) NOT NULL,
   `urutan` int(2) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_jabatan`
@@ -150,12 +161,12 @@ INSERT INTO `ctr_jabatan` (`id`, `jabatan`, `urutan`) VALUES
 -- Table structure for table `ctr_jenis_surat`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_jenis_surat` (
+CREATE TABLE `ctr_jenis_surat` (
   `jenis_id` int(5) NOT NULL,
   `kode` char(20) NOT NULL,
   `nama` varchar(500) DEFAULT NULL,
   `current_time` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_jenis_surat`
@@ -172,10 +183,10 @@ INSERT INTO `ctr_jenis_surat` (`jenis_id`, `kode`, `nama`, `current_time`) VALUE
 -- Table structure for table `ctr_kategori_surat`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_kategori_surat` (
+CREATE TABLE `ctr_kategori_surat` (
   `id_kategori` int(11) NOT NULL,
   `kategori` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ctr_kategori_surat`
@@ -203,11 +214,11 @@ INSERT INTO `ctr_kategori_surat` (`id_kategori`, `kategori`) VALUES
 -- Table structure for table `ctr_ordner`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_ordner` (
+CREATE TABLE `ctr_ordner` (
   `id` int(2) NOT NULL,
   `kode` char(5) NOT NULL,
   `nama` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_ordner`
@@ -228,7 +239,7 @@ INSERT INTO `ctr_ordner` (`id`, `kode`, `nama`) VALUES
 -- Table structure for table `ctr_pegawai`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_pegawai` (
+CREATE TABLE `ctr_pegawai` (
   `id` bigint(20) NOT NULL,
   `jabatan_id` int(2) NOT NULL,
   `nama` varchar(50) NOT NULL,
@@ -244,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `ctr_pegawai` (
   `aktif` char(1) DEFAULT 'Y',
   `diinput_oleh` varchar(20) DEFAULT NULL,
   `diinput_tanggal` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_pegawai`
@@ -304,7 +315,7 @@ INSERT INTO `ctr_pegawai` (`id`, `jabatan_id`, `nama`, `nip`, `pangkat`, `golong
 -- Table structure for table `ctr_permintaan_barang`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_permintaan_barang` (
+CREATE TABLE `ctr_permintaan_barang` (
   `id` int(11) NOT NULL,
   `jabatan_id` int(11) NOT NULL,
   `tgl_permintaan` date NOT NULL,
@@ -319,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `ctr_permintaan_barang` (
 -- Table structure for table `ctr_pesan`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_pesan` (
+CREATE TABLE `ctr_pesan` (
   `id` bigint(20) NOT NULL,
   `user_source` int(11) DEFAULT NULL,
   `user_target` int(11) DEFAULT NULL,
@@ -334,11 +345,11 @@ CREATE TABLE IF NOT EXISTS `ctr_pesan` (
 -- Table structure for table `ctr_sifat_disposisi`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_sifat_disposisi` (
+CREATE TABLE `ctr_sifat_disposisi` (
   `id` int(5) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `keterangan` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_sifat_disposisi`
@@ -354,10 +365,33 @@ INSERT INTO `ctr_sifat_disposisi` (`id`, `nama`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ctr_sifat_surat`
+--
+
+CREATE TABLE `ctr_sifat_surat` (
+  `sifat_id` int(5) NOT NULL,
+  `kode` char(20) NOT NULL,
+  `nama` varchar(500) DEFAULT NULL,
+  `current_time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ctr_sifat_surat`
+--
+
+INSERT INTO `ctr_sifat_surat` (`sifat_id`, `kode`, `nama`, `current_time`) VALUES
+(1, 'SR', 'Sangat Rahasia', NULL),
+(2, 'R', 'Rahasia', NULL),
+(3, 'T', 'Terbatas', NULL),
+(4, 'B', 'Biasa', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ctr_surat_keluar`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_surat_keluar` (
+CREATE TABLE `ctr_surat_keluar` (
   `surat_id` int(5) NOT NULL,
   `no_agenda` varchar(100) NOT NULL,
   `format_nomor_id` int(11) NOT NULL,
@@ -380,7 +414,7 @@ CREATE TABLE IF NOT EXISTS `ctr_surat_keluar` (
 --
 
 INSERT INTO `ctr_surat_keluar` (`surat_id`, `no_agenda`, `format_nomor_id`, `jenis_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `tgl_kirim`, `ekspedisi`, `perihal`, `ket`, `status_disposisi`, `file_name`) VALUES
-(4, '4/KELUAR/XI/2023', 1, 1, 'W8-TUN2/4/OT.00/11/2023', '2023-11-05', '2023-11-05', 'PTUN.GTO', 'saya', '2023-11-05', 1, 'mmm', '', '0', '705a54300692591fe4885fe0acc95b9a1.jpg');
+(4, '4/KELUAR/XI/2023', 1, 3, 'W8-TUN2/4/OT.00/11/2023', '2023-11-05', '2023-11-05', 'PTUN.GTO', 'saya', '2023-11-05', 1, 'mmm', '', '0', 'task-list-add_512x512.png');
 
 -- --------------------------------------------------------
 
@@ -388,7 +422,7 @@ INSERT INTO `ctr_surat_keluar` (`surat_id`, `no_agenda`, `format_nomor_id`, `jen
 -- Table structure for table `ctr_surat_keluar_2`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_surat_keluar_2` (
+CREATE TABLE `ctr_surat_keluar_2` (
   `surat_id` int(5) NOT NULL,
   `no_agenda` varchar(100) NOT NULL,
   `format_nomor_id` int(11) NOT NULL,
@@ -412,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `ctr_surat_keluar_2` (
 -- Table structure for table `ctr_surat_keluar_baru`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_surat_keluar_baru` (
+CREATE TABLE `ctr_surat_keluar_baru` (
   `surat_id` int(5) NOT NULL,
   `no_agenda` varchar(100) NOT NULL,
   `format_nomor_id` int(11) NOT NULL,
@@ -447,11 +481,11 @@ INSERT INTO `ctr_surat_keluar_baru` (`surat_id`, `no_agenda`, `format_nomor_id`,
 -- Table structure for table `ctr_surat_masuk`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_surat_masuk` (
+CREATE TABLE `ctr_surat_masuk` (
   `surat_id` int(5) NOT NULL,
   `no_agenda` varchar(100) NOT NULL,
   `balasan` varchar(20) NOT NULL DEFAULT '-',
-  `jenis_id` int(5) NOT NULL,
+  `sifat_id` int(5) NOT NULL,
   `no_surat` char(100) NOT NULL,
   `tgl_surat` date NOT NULL,
   `tgl_terima` date NOT NULL,
@@ -468,8 +502,8 @@ CREATE TABLE IF NOT EXISTS `ctr_surat_masuk` (
 -- Dumping data for table `ctr_surat_masuk`
 --
 
-INSERT INTO `ctr_surat_masuk` (`surat_id`, `no_agenda`, `balasan`, `jenis_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `perihal`, `ket`, `status_disposisi`, `status_diterima`, `file_name`) VALUES
-(1, '1/MASUK/XI/2023', '-', 1, '1', '2023-11-05', '2023-11-05', 'rsry', 'Ketua PTUN.GTO', 'guiou', '', '0', '0', 0x3730356135343330303639323539316665343838356665306163633935623961332e6a7067);
+INSERT INTO `ctr_surat_masuk` (`surat_id`, `no_agenda`, `balasan`, `sifat_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `perihal`, `ket`, `status_disposisi`, `status_diterima`, `file_name`) VALUES
+(1, '1/MASUK/XI/2023', '-', 1, '1', '2023-11-05', '2023-11-05', 'rsry', 'Ketua PTUN.GTO', 'guiou', '', '1', '0', 0x3730356135343330303639323539316665343838356665306163633935623961332e6a7067);
 
 -- --------------------------------------------------------
 
@@ -477,7 +511,7 @@ INSERT INTO `ctr_surat_masuk` (`surat_id`, `no_agenda`, `balasan`, `jenis_id`, `
 -- Table structure for table `ctr_surat_ordner`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_surat_ordner` (
+CREATE TABLE `ctr_surat_ordner` (
   `id` int(5) NOT NULL,
   `ordner_id` int(5) NOT NULL,
   `surat_id` int(5) NOT NULL,
@@ -490,7 +524,7 @@ CREATE TABLE IF NOT EXISTS `ctr_surat_ordner` (
 -- Table structure for table `ctr_transaksi_barang`
 --
 
-CREATE TABLE IF NOT EXISTS `ctr_transaksi_barang` (
+CREATE TABLE `ctr_transaksi_barang` (
   `id` bigint(20) NOT NULL,
   `kode_barang` varchar(20) NOT NULL,
   `tgl_transaksi` date NOT NULL,
@@ -504,7 +538,7 @@ CREATE TABLE IF NOT EXISTS `ctr_transaksi_barang` (
 -- Table structure for table `dix_buku_tamu`
 --
 
-CREATE TABLE IF NOT EXISTS `dix_buku_tamu` (
+CREATE TABLE `dix_buku_tamu` (
   `id` bigint(20) NOT NULL,
   `tujuan_id` int(2) NOT NULL COMMENT '"menghadap kebagian" refer table ctr_jabatan kolom id',
   `nama` varchar(50) NOT NULL,
@@ -521,13 +555,13 @@ CREATE TABLE IF NOT EXISTS `dix_buku_tamu` (
 -- Table structure for table `dix_ref_format_nomor_surat`
 --
 
-CREATE TABLE IF NOT EXISTS `dix_ref_format_nomor_surat` (
+CREATE TABLE `dix_ref_format_nomor_surat` (
   `id` int(11) NOT NULL,
   `format_penomoran` varchar(100) NOT NULL,
   `kode_surat` varchar(100) DEFAULT NULL,
   `uraian` varchar(100) NOT NULL,
   `bagian` char(1) DEFAULT NULL COMMENT '1. Kepegawaian, 2. Umum dan Keuangan, 3.IT, 4. Pidana, 5. Perdata, 6. Hukum'
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dix_ref_format_nomor_surat`
@@ -619,11 +653,11 @@ INSERT INTO `dix_ref_format_nomor_surat` (`id`, `format_penomoran`, `kode_surat`
 -- Table structure for table `dix_ref_nomor_agenda`
 --
 
-CREATE TABLE IF NOT EXISTS `dix_ref_nomor_agenda` (
+CREATE TABLE `dix_ref_nomor_agenda` (
   `id` int(1) NOT NULL,
   `format_nomor_agenda` varchar(100) NOT NULL,
   `uraian` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dix_ref_nomor_agenda`
@@ -639,7 +673,7 @@ INSERT INTO `dix_ref_nomor_agenda` (`id`, `format_nomor_agenda`, `uraian`) VALUE
 -- Table structure for table `dix_spt`
 --
 
-CREATE TABLE IF NOT EXISTS `dix_spt` (
+CREATE TABLE `dix_spt` (
   `id` bigint(20) NOT NULL,
   `pegawai_id` varchar(50) NOT NULL,
   `nomor_surat` varchar(50) NOT NULL,
@@ -661,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `dix_spt` (
 -- Table structure for table `dix_surat_ijin`
 --
 
-CREATE TABLE IF NOT EXISTS `dix_surat_ijin` (
+CREATE TABLE `dix_surat_ijin` (
   `id` bigint(20) NOT NULL,
   `pegawai_id` bigint(20) NOT NULL,
   `jenis_ijin` char(1) DEFAULT NULL COMMENT '1. Ijin Tdk Masuk, 2. Cuti Sakit, 3.Cuti Tahunan, 4.Cuti Besar, 5. Cuti Bersalin, 6. Cuti Karena Alasan Penting',
@@ -675,7 +709,7 @@ CREATE TABLE IF NOT EXISTS `dix_surat_ijin` (
   `tgl_diijinkan` date DEFAULT NULL,
   `diinput_oleh` varchar(50) DEFAULT NULL,
   `diinput_tanggal` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dix_surat_ijin`
@@ -762,11 +796,11 @@ INSERT INTO `dix_surat_ijin` (`id`, `pegawai_id`, `jenis_ijin`, `tgl_permohonan`
 -- Table structure for table `format_nomor_surat`
 --
 
-CREATE TABLE IF NOT EXISTS `format_nomor_surat` (
+CREATE TABLE `format_nomor_surat` (
   `id` int(11) NOT NULL,
   `format_nomor` varchar(255) NOT NULL,
   `jabatan` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `format_nomor_surat`
@@ -783,7 +817,7 @@ INSERT INTO `format_nomor_surat` (`id`, `format_nomor`, `jabatan`) VALUES
 -- Table structure for table `sys_config`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_config` (
+CREATE TABLE `sys_config` (
   `id` int(1) NOT NULL,
   `nama` varchar(100) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
@@ -797,7 +831,7 @@ CREATE TABLE IF NOT EXISTS `sys_config` (
   `fax` varchar(30) DEFAULT NULL,
   `kota` varchar(100) DEFAULT NULL,
   `kode_pn` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sys_config`
@@ -812,13 +846,13 @@ INSERT INTO `sys_config` (`id`, `nama`, `alamat`, `ketua`, `nip`, `logo`, `versi
 -- Table structure for table `sys_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_groups` (
+CREATE TABLE `sys_groups` (
   `groupid` int(11) NOT NULL COMMENT 'Primary Key: (by system)',
   `level` int(1) DEFAULT NULL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
   `enable` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Aktif: pilihan 1=Ya; 0=Tidak',
-  `ordering` int(11) unsigned NOT NULL DEFAULT '0'
+  `ordering` int(11) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -852,8 +886,8 @@ INSERT INTO `sys_groups` (`groupid`, `level`, `name`, `description`, `enable`, `
 -- Table structure for table `sys_users`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_users` (
-  `userid` bigint(20) unsigned NOT NULL COMMENT 'UserId: (by system)',
+CREATE TABLE `sys_users` (
+  `userid` bigint(20) UNSIGNED NOT NULL COMMENT 'UserId: (by system)',
   `pegawai_id` bigint(20) DEFAULT NULL,
   `groupid` int(11) DEFAULT NULL,
   `nip_nrp` varchar(25) DEFAULT NULL,
@@ -864,14 +898,14 @@ CREATE TABLE IF NOT EXISTS `sys_users` (
   `last_login` datetime DEFAULT NULL COMMENT 'Tanggal Terakhir Login: (by system)',
   `block` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Blok User: pilihan 0=Tidak; 1=ya',
   `code_activation` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sys_users`
 --
 
 INSERT INTO `sys_users` (`userid`, `pegawai_id`, `groupid`, `nip_nrp`, `fullname`, `username`, `password`, `email`, `last_login`, `block`, `code_activation`) VALUES
-(1, 1, 1, '-', 'Super Administrator', 'admin', '28cb9b46551251d23a63bd4c6d0b5832', 'ptun.gorontalo@gmail.com', '2023-11-05 12:18:36', 0, 'd1c5a1d07ec79ad891c3e692cba2b420'),
+(1, 1, 1, '-', 'Super Administrator', 'admin', '28cb9b46551251d23a63bd4c6d0b5832', 'ptun.gorontalo@gmail.com', '2023-11-14 10:27:58', 0, 'd1c5a1d07ec79ad891c3e692cba2b420'),
 (2, 45, 1, '196801201997031001', 'SUTIYONO, S.H., M.H.', 'ketua', '32e45d9c377ef416206f1133c1d685dc', 'bandaaceh@ptun.org', '2023-08-21 02:40:56', 0, '1202a0a5d66c6361efef9a10fdb3e852'),
 (9, 14, 4, '196611251990031001', 'SYAMSUL BAKHRY, S.H., M.H.', 'sekretaris', 'db57d0045057bdb0ce2ae614108ac8fd', 'bandaaceh@ptun.org', '2023-08-21 02:20:24', 0, '766c8c0c3f494c45bc9522b636b36905'),
 (10, 13, 7, '197905162006041004', 'JAENAL ARIFIN SUJOKO, S.H.', 'plthukum', '811848155996fbb492b042eadb2f41a3', 'bandaaceh@ptun.org', '2023-05-23 04:46:37', 0, '04b4d3a5aaa80dbe4aa5f276644a78c9'),
@@ -902,7 +936,8 @@ INSERT INTO `sys_users` (`userid`, `pegawai_id`, `groupid`, `nip_nrp`, `fullname
 (44, 55, 1, '196812081991031007', 'SULTHAN, S.H.', 'panitera', 'fbbc79f6b498c745897ae3e8d5bd4f86', 'bandaaceh@ptun.org', '2023-08-07 03:41:44', 0, '24fd2b18f5f62d94d4129d5d5faff4fc'),
 (45, 19, 12, '198207122007012009', 'SRI IMELDA AYU UTAMI DUDE, S.E.', 'melly', '9a4dd014eeb1a14311caa40882bd6924', 'bandaaceh@ptun.org', '2023-01-30 09:22:15', 0, 'f5b5089bef2a36d63a6e10155e516752'),
 (46, 58, 2, '197004271996032004', 'RIALAM SIHITE, S.H., M.H.', 'wakil', 'c98b5c0025b03f4bf6ac7c6f2da8397b', 'bandaaceh@ptun.org', '2023-08-10 03:42:11', 0, 'd089a122a761484c498c8d394d55386f'),
-(47, 59, 6, '-', 'Plh. Panitera Muda Perkara', 'plhperkara', '90ad3ec14cab119d1431c76f1df56d0b', 'bandaaceh@ptun.org', '2023-07-26 07:41:24', 0, 'ba4ebf82a4ad47168503088481006afe');
+(47, 59, 6, '-', 'Plh. Panitera Muda Perkara', 'plhperkara', '90ad3ec14cab119d1431c76f1df56d0b', 'bandaaceh@ptun.org', '2023-07-26 07:41:24', 0, 'ba4ebf82a4ad47168503088481006afe'),
+(49, 59, 3, '-', 'Plh. Panitera Muda Perkara', 'admin123', '3921103f2cd1de5ef917b269a2cee02e', 'bandaaceh@ptun.org', '2023-11-14 10:27:48', 0, 'bc449ab8f87b189cf18a987f7d85ed46');
 
 -- --------------------------------------------------------
 
@@ -910,7 +945,7 @@ INSERT INTO `sys_users` (`userid`, `pegawai_id`, `groupid`, `nip_nrp`, `fullname
 -- Table structure for table `sys_user_online`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_user_online` (
+CREATE TABLE `sys_user_online` (
   `session_id` char(32) NOT NULL DEFAULT '' COMMENT 'SessionId (by system)',
   `userid` int(11) NOT NULL COMMENT 'UserId: merujuk ke tabel sys_users ke kolom userid (by system)',
   `host_address` varchar(50) NOT NULL DEFAULT '' COMMENT 'Alamat IP (by system)',
@@ -944,7 +979,7 @@ INSERT INTO `sys_user_online` (`session_id`, `userid`, `host_address`, `login_ti
 ('9', 9, '10.236.0.2', '2023-08-20 18:20:24', 'Chrome 115.0.0.0 Windows 10', '', '', NULL, NULL),
 ('32', 32, '10.236.0.2', '2023-08-20 18:20:39', 'Chrome 116.0.0.0 Windows 10', '', '', NULL, NULL),
 ('2', 2, '10.236.0.2', '2023-08-20 18:40:55', 'Firefox 116.0 Windows 10', '', '', NULL, NULL),
-('1', 1, '::1', '2023-11-05 05:18:36', 'Chrome 118.0.0.0 Windows 10', '', '', NULL, NULL);
+('1', 1, '::1', '2023-11-14 03:27:58', 'Chrome 119.0.0.0 Windows 10', '', '', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1019,6 +1054,12 @@ ALTER TABLE `ctr_pesan`
 ALTER TABLE `ctr_sifat_disposisi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `ctr_sifat_surat`
+--
+ALTER TABLE `ctr_sifat_surat`
+  ADD PRIMARY KEY (`sifat_id`);
 
 --
 -- Indexes for table `ctr_surat_keluar`
@@ -1125,42 +1166,42 @@ ALTER TABLE `sys_users`
 -- AUTO_INCREMENT for table `ctr_barang`
 --
 ALTER TABLE `ctr_barang`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `ctr_disposisi`
 --
 ALTER TABLE `ctr_disposisi`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `ctr_ekspedisi`
 --
 ALTER TABLE `ctr_ekspedisi`
-  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `ctr_jabatan`
 --
 ALTER TABLE `ctr_jabatan`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `ctr_jenis_surat`
 --
 ALTER TABLE `ctr_jenis_surat`
-  MODIFY `jenis_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `jenis_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `ctr_kategori_surat`
 --
 ALTER TABLE `ctr_kategori_surat`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `ctr_ordner`
 --
 ALTER TABLE `ctr_ordner`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `ctr_pegawai`
 --
 ALTER TABLE `ctr_pegawai`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT for table `ctr_permintaan_barang`
 --
@@ -1175,12 +1216,17 @@ ALTER TABLE `ctr_pesan`
 -- AUTO_INCREMENT for table `ctr_sifat_disposisi`
 --
 ALTER TABLE `ctr_sifat_disposisi`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `ctr_sifat_surat`
+--
+ALTER TABLE `ctr_sifat_surat`
+  MODIFY `sifat_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `ctr_surat_ordner`
 --
 ALTER TABLE `ctr_surat_ordner`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `ctr_transaksi_barang`
 --
@@ -1195,12 +1241,12 @@ ALTER TABLE `dix_buku_tamu`
 -- AUTO_INCREMENT for table `dix_ref_format_nomor_surat`
 --
 ALTER TABLE `dix_ref_format_nomor_surat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 --
 -- AUTO_INCREMENT for table `dix_ref_nomor_agenda`
 --
 ALTER TABLE `dix_ref_nomor_agenda`
-  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `dix_spt`
 --
@@ -1210,22 +1256,22 @@ ALTER TABLE `dix_spt`
 -- AUTO_INCREMENT for table `dix_surat_ijin`
 --
 ALTER TABLE `dix_surat_ijin`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `format_nomor_surat`
 --
 ALTER TABLE `format_nomor_surat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `sys_config`
 --
 ALTER TABLE `sys_config`
-  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `sys_users`
 --
 ALTER TABLE `sys_users`
-  MODIFY `userid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'UserId: (by system)',AUTO_INCREMENT=48;
+  MODIFY `userid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'UserId: (by system)', AUTO_INCREMENT=50;
 --
 -- Constraints for dumped tables
 --
@@ -1247,6 +1293,7 @@ ALTER TABLE `ctr_surat_ordner`
 --
 ALTER TABLE `ctr_transaksi_barang`
   ADD CONSTRAINT `ctr_transaksi_barang_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `ctr_barang` (`kode_barang`) ON DELETE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
