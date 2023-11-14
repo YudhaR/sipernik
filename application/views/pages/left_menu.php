@@ -121,7 +121,7 @@
                             <a href="#" onClick="jalankan('Referensi/sifat_surat')">Sifat Surat</a>
                         </li>
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/status_surat')">Status Surat</a>
+                            <a href="#" onClick="jalankan('Referensi/jenis_surat')">Jenis Surat</a>
                         </li>
                         <li>
                             <a href="#" onClick="jalankan('Referensi/kategori_surat')">Kategori Surat</a>

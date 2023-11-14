@@ -1,10 +1,10 @@
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="header bg-red">
                 <h2>
                    <?php echo $title;?>
                    <div class="divider"></div>
-                    <small class="col-blue">Masukkan kode dan nama Sifat surat</small>
+                    <small class="col-blue">Masukkan kode dan nama sifat surat</small>
                 </h2>
             </div>
             <div class="body">
@@ -22,7 +22,7 @@
                               </div>
                           </div>
                           <div class="col-md-8 col-red">
-                              <b>Sifat Surat :</b>
+                              <b>sifat Surat :</b>
                               <div class="input-group">
                                   <span class="input-group-addon">
                                       <i class="fa fa-book"></i>

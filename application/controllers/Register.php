@@ -90,8 +90,11 @@ class Register extends CI_Controller
 		} else {
 			$this->load->model('M_system', 'system');
 			$data	= $this->system->konfigurasi_instansi()->result_object();
-			$data['sifat_surat'] = $this->persuratan->get_sifat_surat();
-			$data['status_surat'] = $this->persuratan->get_status_surat();
+			if ($alur == "keluar") {
+				$data['jenis_surat'] = $this->persuratan->get_jenis_surat();
+			} elseif ($alur == "masuk") {
+				$data['sifat_surat'] = $this->persuratan->get_sifat_surat();
+			}
 			$data['alur']				= $alur;
 			if ($act == "tambah") {
 				$data['harus_disposisi'] = $this->persuratan->harus_disposisi('masuk')->num_rows();
@@ -108,15 +111,15 @@ class Register extends CI_Controller
 					$data['no_surat']			= '';
 					$data['untuk']				= '';
 					$data['pengirim']			= $data[0]->kode_pn;
+					$data['jenis_id']			= '';
 				} elseif ($alur == "masuk") {
 					$data['no_surat']			= '';
 					$data['untuk']				= 'Ketua ' . $data[0]->kode_pn;
 					$data['pengirim']			= '';
+					$data['sifat_id']			= '';
 				}
 				// $data['balasan']			='-';
 				$data['format_surat']		= '';
-				$data['sifat_id']			= '';
-				$data['status_id']			= '';
 				$data['kategori_id']			= '';
 				$data['tgl_surat']			= date("d/m/Y");
 				$data['file_name']			= '';
@@ -150,9 +153,8 @@ class Register extends CI_Controller
 					$data['format_surat']		= $row[0]->no_surat;
 					$data['no_agenda']			= $row[0]->surat_id;
 				// $data['balasan']			= $row[0]->balasan;
-					$data['sifat_id']			= $row[0]->sifat_id;
-					$data['status_id']			= $row[0]->status_id;
-					$data['kategori_id']			= $row[0]->kategori_id;
+					$data['jenis_id']			= $row[0]->jenis_id;
+					$data['kategori_id']		= $row[0]->kategori_id;
 					$data['tgl_surat']			= $this->tanggalhelper->convertToInputDate($row[0]->tgl_surat);
 					$data['tgl_terima']			= $this->tanggalhelper->convertToInputDate($row[0]->tgl_terima);
 					$data['pengirim']			= $row[0]->pengirim;
@@ -162,7 +164,7 @@ class Register extends CI_Controller
 					$data['ket']             	= $row[0]->ket;
 					$data['status']             = $row[0]->status_disposisi;
 					$format_id = $this->persuratan->cek_ref_format_surat($row[0]->format_nomor_id, 1)->result();
-					// $data['format_surat_id'] 	= $format_id[0]->format_penomoran;
+					$data['format_surat_id'] 	= $format_id[0]->format_penomoran;
 					$data['format_surat_id'] 	= '';
 				} elseif ($alur == "masuk") {
 					$data['no_surat']			= $row_masuk[0]->no_surat;
@@ -171,7 +173,6 @@ class Register extends CI_Controller
 					$data['no_agenda']			= $row_masuk[0]->surat_id;
 					// $data['balasan']			= $row_masuk[0]->balasan;
 					$data['sifat_id']			= $row_masuk[0]->sifat_id;
-					$data['status_id']			= $row_masuk[0]->status_id;
 					$data['kategori_id']			= $row_masuk[0]->kategori_id;
 					$data['tgl_surat']			= $this->tanggalhelper->convertToInputDate($row_masuk[0]->tgl_surat);
 					$data['tgl_terima']			= $this->tanggalhelper->convertToInputDate($row_masuk[0]->tgl_terima);
@@ -205,15 +206,15 @@ class Register extends CI_Controller
 					$data['no_surat']			= $last_id[0]->last_id + 1;;
 					$data['untuk']				= '';
 					$data['pengirim']			= $data[0]->kode_pn;
+					$data['jenis_id']			= '';
 				} elseif ($alur == "masuk") {
 					$data['no_surat']			= '';
 					$data['untuk']				= 'Ketua ' . $data[0]->kode_pn;
 					$data['pengirim']			= '';
+					$data['sifat_id']			= '';
 				}
 				// $data['balasan']			='-';
 				$data['format_surat']		= '';
-				$data['sifat_id']			= '';
-				$data['status_id']			= '';
 				$data['tgl_surat']			= date("d/m/Y");
 				$data['file_name']			= '';
 				$data['perihal']			= '';
@@ -233,6 +234,7 @@ class Register extends CI_Controller
 					$data['ekspedisi']			= $row[0]->ekspedisi;
 					$data['no_surat']			= $row[0]->surat_id;
 					$data['format_surat']		= $row[0]->no_surat;
+					$data['jenis_id']			= $row[0]->jenis_id;
 					$format_id = $this->persuratan->cek_ref_format_surat($row[0]->format_nomor_id, 1)->result();
 					// $data['format_surat_id'] 	= $format_id[0]->format_penomoran;
 					$data['format_surat_id'] 	= '';
@@ -240,11 +242,10 @@ class Register extends CI_Controller
 					$data['no_surat']			= $row[0]->no_surat;
 					$data['format_surat']		= '';
 					$data['format_surat_id'] 	= '';
+					$data['sifat_id']			= $row[0]->sifat_id;
 				}
 				$data['no_agenda']			= $row[0]->surat_id;
 				// $data['balasan']			= $row[0]->balasan;
-				$data['sifat_id']			= $row[0]->sifat_id;
-				$data['status_id']			= $row[0]->status_id;
 				$data['tgl_surat']			= $this->tanggalhelper->convertToInputDate($row[0]->tgl_surat);
 				$data['tgl_terima']			= $this->tanggalhelper->convertToInputDate($row[0]->tgl_terima);
 				$data['pengirim']			= $row[0]->pengirim;
@@ -265,8 +266,11 @@ class Register extends CI_Controller
 			} else if ($act == "popup_cetak") {
 				$data['dari']			= date("d/m/Y");
 				$data['sampai']			= date("d/m/Y");
-				$data['sifat_surat']	= $this->persuratan->get_sifat_surat()->result();
-				$data['status_surat']	= $this->persuratan->get_status_surat()->result();
+				if ($alur == "keluar") {
+					$data['jenis_surat'] = $this->persuratan->get_jenis_surat()->result();
+				} elseif ($alur == "masuk") {
+					$data['sifat_surat'] = $this->persuratan->get_sifat_surat()->result();
+				}
 				$data['tahun']			= $this->persuratan->get_tahun($alur)->result();
 				$data['act']			= "cetak_agenda";
 				$data['title']			= strtoupper("CETAK BUKU AGENDA - SURAT " . $alur);
@@ -276,8 +280,11 @@ class Register extends CI_Controller
 				$jenis_cetak = $this->input->post('jenis_cetak', TRUE);
 				$bulan = $this->input->post('bulan', TRUE);
 				$tahun = $this->input->post('tahun', TRUE);
-				$sifat_surat = $this->input->post('sifat_surat', TRUE);
-				$status_surat = $this->input->post('status_surat', TRUE);
+				if ($alur == "keluar") {
+					$jenis_surat = $this->input->post('jenis_surat', TRUE);
+				} elseif ($alur == "masuk") {
+					$sifat_surat = $this->input->post('sifat_surat', TRUE);
+				}
 				$mulai = $this->tanggalhelper->convertToMysqlDate($this->input->post('dari', TRUE));
 				$sampai = $this->tanggalhelper->convertToMysqlDate($this->input->post('sampai', TRUE));
 
@@ -296,17 +303,19 @@ class Register extends CI_Controller
 						$data['data']	= $this->persuratan->tampil_agenda($alur, $jenis_cetak, "", "", "", $tahun)->result_object();
 						$data['jenis'] = "Berdasarkan Tahun " . $tahun;
 						$data['file_name'] = "pertahun";
-					case '4':
-						$sifat_surat_nama = $this->persuratan->get_sifat_surat($sifat_surat)->result_object();
-						$data['data']	= $this->persuratan->tampil_agenda($alur, $jenis_cetak, "", "", "", $tahun, $sifat_surat)->result_object();
-						$data['jenis'] = "Berdasarkan Jenis Surat " . $sifat_surat_nama[0]->nama;
-						$data['file_name'] = "jenissurat";
 						break;
-					case '5':
-						$status_surat_nama = $this->persuratan->get_status_surat($status_surat)->result_object();
-						$data['data']	= $this->persuratan->tampil_agenda($alur, $jenis_cetak, "", "", "", $tahun, $status_surat)->result_object();
-						$data['jenis'] = "Berdasarkan Status Surat " . $status_surat_nama[0]->nama;
-						$data['file_name'] = "statussurat";
+					case '4':
+						if ($alur == "keluar") {
+							$jenis_surat_nama = $this->persuratan->get_jenis_surat($jenis_surat)->result_object();
+							$data['data']	= $this->persuratan->tampil_agenda($alur, $jenis_cetak, "", "", "", $tahun, $jenis_surat)->result_object();
+							$data['jenis'] = "Berdasarkan Jenis Surat " . $jenis_surat_nama[0]->nama;
+							$data['file_name'] = "jenissurat";
+						} elseif ($alur == "masuk") {
+							$sifat_surat_nama = $this->persuratan->get_sifat_surat($sifat_surat)->result_object();
+							$data['data']	= $this->persuratan->tampil_agenda($alur, $jenis_cetak, "", "", "", $tahun,  "",$sifat_surat)->result_object();
+							$data['sifat'] = "Berdasarkan Sifat Surat " . $sifat_surat_nama[0]->nama;
+							$data['file_name'] = "sifatsurat";
+						}
 						break;
 					default:
 						$data['data']	= $this->persuratan->tampil_agenda($alur, $jenis_cetak, "", "", "", $tahun)->result_object();
@@ -336,8 +345,7 @@ class Register extends CI_Controller
 					$data['no_agenda']			= $row[0]->no_agenda;
 					// $data['balasan']			= $row[0]->balasan;
 					$data['kode']				= $row[0]->kode;
-					$data['sifat_nama']			= $row[0]->sifat_nama;
-					$data['status_nama']		= $row[0]->status_nama;
+					$data['nama']				= $row[0]->nama;
 					$data['no_surat']			= $row[0]->no_surat;
 					$data['tgl_surat']			= tgl_indo($row[0]->tgl_surat);
 					$data['tgl_terima']			= tgl_indo($row[0]->tgl_terima);
@@ -413,21 +421,20 @@ class Register extends CI_Controller
 				} else if ($act_extra == "preview") {
 					if ($alur == "masuk") {
 						$surat	= $this->persuratan->surat($alur, $surat_id)->result_object();
+						$a['sifat_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
 					} else {
 						$surat	= $this->persuratan->surat_baru($alur, $surat_id)->result_object();
 						$a['kategori_surat'] = $surat[0]->kategori;
+						$a['jenis_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
 					}
-
 					$a['data']	= $this->persuratan->get_disposisi($surat_id)->result_object();
-					$a['sifat_surat'] = $surat[0]->kode . '/' . $surat[0]->sifat_nama;
 					$a['no_agenda'] = $surat[0]->no_agenda;
 					$a['no_surat'] = $surat[0]->no_surat;
 					// $a['balasan'] = $surat[0]->balasan;
 					$a['tgl_surat'] = tgl_indo($surat[0]->tgl_surat);
 					$a['tgl_terima_kirim'] = tgl_indo($surat[0]->tgl_terima);
 					$a['kode'] = ucwords($surat[0]->kode);
-					$a['sifat_nama'] = ucwords($surat[0]->sifat_nama);
-					$a['status_nama'] = ucwords($surat[0]->status_nama);
+					$a['nama'] = ucwords($surat[0]->nama);
 					$a['pengirim'] = ucwords($surat[0]->pengirim);
 					$a['untuk'] = ucwords($surat[0]->untuk);
 					$a['file_name'] = $surat[0]->file_name;
@@ -442,13 +449,14 @@ class Register extends CI_Controller
 				} else if ($act_extra == "preview_kosong") {
 					if ($alur == "masuk") {
 						$surat	= $this->persuratan->surat($alur, $surat_id)->result_object();
+						$a['sifat_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
 					} else {
 						$surat	= $this->persuratan->surat_baru($alur, $surat_id)->result_object();
 						$a['kategori_surat'] = $surat[0]->kategori;
+						$a['jenis_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
 					}
 					$a['alur'] = $alur;
 					$a['data']	= $this->persuratan->get_disposisi('-1')->result_object();
-					$a['sifat_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
 					$a['no_agenda'] = $surat[0]->no_agenda;
 					$a['no_surat'] = $surat[0]->no_surat;
 					// $a['balasan'] = $surat[0]->balasan;
@@ -506,11 +514,12 @@ class Register extends CI_Controller
 				if ($alur == "keluar") {
 					$data['tgl_kirim']			= date("d/m/Y");
 					$data['ekspedisi']			= '-1';
+					$data['jenis_id']			= '';
+				} else if ($alur == "masuk") {
+					$data['sifat_id']			= '';
 				}
 				$data['kepada']			= '';
 				$data['no_surat']			= '';
-				$data['sifat_id']			= '';
-				$data['status_id']			= '';
 				$data['kategori_id']			= '';
 				$data['tgl_surat']			= date("d/m/Y");
 				$data['pengirim']			= '';
@@ -542,8 +551,7 @@ class Register extends CI_Controller
 				$data['no_agenda']			= $row[0]->no_agenda;
 				// $data['balasan']			= $row[0]->balasan;
 				$data['kode']				= $row[0]->kode;
-				$data['sifat_nama']			= $row[0]->sifat_nama;
-				$data['status_nama']		= $row[0]->status_nama;
+				$data['nama']				= $row[0]->nama;
 				$data['no_surat']			= $row[0]->no_surat;
 				$data['tgl_surat']			= tgl_indo($row[0]->tgl_surat);
 				$data['tgl_terima']			= tgl_indo($row[0]->tgl_terima);
@@ -577,8 +585,11 @@ class Register extends CI_Controller
 		$tgl_terima = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_terima', TRUE));
 		$tgl_kirim = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_kirim', TRUE));
 		$ekspedisi = $this->input->post('ekspedisi', TRUE);
-		$sifat_id = $this->input->post('sifat_surat', TRUE);
-		$status_id = $this->input->post('status_surat', TRUE);
+		if ($alur == "masuk") {
+			$sifat_id = $this->input->post('sifat_surat', TRUE);
+		} else if ($alur == "keluar") {
+			$jenis_id = $this->input->post('jenis_surat', TRUE);
+		}
 		$kategori_id = $this->input->post('kategori_surat', TRUE);
 		$format_nomor = $this->input->post('format_kode', TRUE);
 		$format_no_surat_id = $this->input->post('format_nomor_surat_id', TRUE);
@@ -622,8 +633,6 @@ class Register extends CI_Controller
 			$data = array(
 				'no_agenda' => $no_agenda,
 				'surat_id' => $no_urut,
-				'sifat_id' => $sifat_id,
-				'status_id' => $status_id,
 				'no_surat' => $no_surat,
 				'tgl_surat' => $tgl_surat,
 				'tgl_terima' => $tgl_terima,
@@ -636,18 +645,19 @@ class Register extends CI_Controller
 			);
 			if ($alur == "keluar") {
 				$data['tgl_kirim'] = $tgl_kirim;
+				$data['jenis_id'] = $jenis_id;
 				$data['ekspedisi'] = $ekspedisi;
 				$data['kategori_id'] = $kategori_id;
 				$data['format_nomor_id'] = $format_id[0]->id;
 				$data['format_no_surat_id'] = $format_no_surat_id;
+			} else if ($alur == "masuk"){
+				$data['sifat_id'] = $sifat_id;
 			}
 		} else {
 			$data_file = array('upload_data' => $this->upload->data());
 			$data = array(
 				'no_agenda' => $no_agenda,
 				'surat_id' => $no_urut,
-				'sifat_id' => $sifat_id,
-				'status_id' => $status_id,
 				'no_surat' => $no_surat,
 				'tgl_surat' => $tgl_surat,
 				'tgl_terima' => $tgl_terima,
@@ -661,9 +671,12 @@ class Register extends CI_Controller
 			if ($alur == "keluar") {
 				$data['tgl_kirim'] = $tgl_kirim;
 				$data['ekspedisi'] = $ekspedisi;
+				$data['jenis_id'] = $jenis_id;
 				$data['kategori_id'] = $kategori_id;
 				$data['format_nomor_id'] = $format_id[0]->id;
 				$data['format_no_surat_id'] = $format_no_surat_id;
+			} else if ($alur == "masuk"){
+				$data['sifat_id'] = $sifat_id;
 			}
 		}
 
@@ -697,8 +710,11 @@ class Register extends CI_Controller
 		$tgl_terima = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_terima', TRUE));
 		$tgl_kirim = $this->tanggalhelper->convertToMysqlDate($this->input->post('tgl_kirim', TRUE));
 		$ekspedisi = $this->input->post('ekspedisi', TRUE);
-		$sifat_id = $this->input->post('sifat_surat', TRUE);
-		$status_id = $this->input->post('status_surat', TRUE);
+		if ($alur == "masuk") {
+			$sifat_id = $this->input->post('sifat_surat', TRUE);
+		} else if ($alur == "keluar") {
+			$jenis_id = $this->input->post('jenis_surat', TRUE);
+		}
 		$format_nomor = $this->input->post('format_nomor', TRUE);
 		$format_id = $this->persuratan->cek_ref_format_surat($format_nomor, 2)->result();
 		if ($alur == 'keluar') {
@@ -727,8 +743,6 @@ class Register extends CI_Controller
 			$data = array(
 				'no_agenda' => $no_agenda,
 				'surat_id' => $no_urut,
-				'sifat_id' => $sifat_id,
-				'status_id' => $status_id,
 				'no_surat' => $no_surat,
 				'tgl_surat' => $tgl_surat,
 				'tgl_terima' => $tgl_terima,
@@ -742,14 +756,16 @@ class Register extends CI_Controller
 			if ($alur == "keluar") {
 				$data['tgl_kirim'] = $tgl_kirim;
 				$data['ekspedisi'] = $ekspedisi;
+				$data['jenis_id'] = $jenis_id;
 				$data['format_nomor_id'] = $format_id[0]->id;
+			} else if ($alur == "masuk"){
+				$data['sifat_id'] = $sifat_id;
 			}
 		} else {
 			$data_file = array('upload_data' => $this->upload->data());
 			$data = array(
 				'no_agenda' => $no_agenda,
 				'surat_id' => $no_urut,
-				'status_id' => $status_id,
 				'no_surat' => $no_surat,
 				'tgl_surat' => $tgl_surat,
 				'tgl_terima' => $tgl_terima,
@@ -763,12 +779,18 @@ class Register extends CI_Controller
 			if ($alur == "keluar") {
 				$data['tgl_kirim'] = $tgl_kirim;
 				$data['ekspedisi'] = $ekspedisi;
+				$data['jenis_id'] = $jenis_id;
 				$data['format_nomor_id'] = $format_id[0]->id;
+			} else if ($alur == "masuk"){
+				$data['sifat_id'] = $sifat_id;
 			}
 		}
 		if ($act == 'insert_surat_lama') {
 			$this->db->insert('ctr_surat_' . $alur, $data);
 		} else if ($act == 'edit_surat_lama') {
+			$this->db->where('surat_id', $surat_id);
+			$this->db->update('ctr_surat_' . $alur, $data);
+		} else if ($act == 'edit') {
 			$this->db->where('surat_id', $surat_id);
 			$this->db->update('ctr_surat_' . $alur, $data);
 		}

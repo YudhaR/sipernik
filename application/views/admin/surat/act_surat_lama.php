@@ -41,23 +41,51 @@
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-6">
+                            <?php if ($alur == "masuk") {
+                                ?>
                                 <p class="col-red">
                                     Sifat Surat :
                                 </p>
-                                  <select name="sifat_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                <select name="sifat_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                     <?php
-                                    $l_jenis = $this->db->query("SELECT * FROM ctr_sifat_surat")->result();
-                                    if (empty($l_jenis)) {
-                                      echo "<option  value='-1'> --Tidak Ada Data-- </option>";
+                                    $l_sifat = $this->db->query("SELECT * FROM ctr_sifat_surat")->result();
+                                    if (empty($l_sifat)) {
+                                        echo "<option  value='-1'> --Tidak Ada Data-- </option>";
                                     } else {
-                                        foreach($l_jenis as $l_sifat_surat){
-                                            ?>
-                                            <option <?php if( $sifat_id == $l_sifat_surat->sifat_id) {echo "selected"; } ?> value='<?php echo $l_sifat_surat->sifat_id ;?>'><?php echo $l_sifat_surat->nama ;?></option>
-                                            <?php 
-                                        } 
-                                      }
+                                        foreach ($l_sifat as $l_sifat_surat) {
                                     ?>
-                                  </select>
+                                            <option <?php if ($sifat_id == $l_sifat_surat->sifat_id) {
+                                                        echo "selected";
+                                                    } ?> value='<?php echo $l_sifat_surat->sifat_id; ?>'><?php echo $l_sifat_surat->nama; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            <?php
+                            } else if ($alur == "keluar") {
+                            ?>
+                                <p class="col-red">
+                                    Jenis Surat :
+                                </p>
+                                <select name="jenis_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
+                                    <?php
+                                    $l_jenis = $this->db->query("SELECT * FROM ctr_jenis_surat")->result();
+                                    if (empty($l_jenis)) {
+                                        echo "<option  value='-1'> --Tidak Ada Data-- </option>";
+                                    } else {
+                                        foreach ($l_jenis as $l_jenis_surat) {
+                                    ?>
+                                            <option <?php if ($jenis_id == $l_jenis_surat->jenis_id) {
+                                                        echo "selected";
+                                                    } ?> value='<?php echo $l_jenis_surat->jenis_id; ?>'><?php echo $l_jenis_surat->nama; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            <?php
+                            } ?>
                             </div>
                              <div class="col-md-5 col-red">
                                     Tanggal surat :
@@ -73,7 +101,7 @@
                         </div>
                         <div class="row clearfix">
                             <div class="masked-input">
-                                <div class="col-md-6 col-red">
+                                <div class="col-md-4 col-red">
                                     Nomor Surat :
                                     <div class="input-group">
                                         <div class="form-line">
@@ -81,28 +109,9 @@
                                         </div>
                                     </div>      
                                 </div>
-                                <div class="col-md-5 col-red">
-                                    Status Surat :
-                                    <select name="status_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
-                                    <?php
-                                    $l_jenis = $this->db->query("SELECT * FROM ctr_status_surat")->result();
-                                    if (empty($l_jenis)) {
-                                      echo "<option  value='-1'> --Tidak Ada Data-- </option>";
-                                    } else {
-                                        foreach($l_jenis as $l_status_surat){
-                                            ?>
-                                            <option <?php if( $status_id == $l_status_surat->status_id) {echo "selected"; } ?> value='<?php echo $l_status_surat->status_id ;?>'><?php echo $l_status_surat->nama ;?></option>
-                                            <?php 
-                                        } 
-                                      }
-                                    ?>
-                                  </select>
-                                </div>
                             </div>
-                        </div>
-                        <div class="row clearfix">
                             <?php if ($alur=='keluar'): ?>
-                            <div class="col-md-6 col-red">
+                            <div class="col-md-4 col-red">
                                     <input id="check_nomor" type="checkbox" <?php #echo ($act!='edit' ? "checked" : " " );?> checked> Format Surat <?php echo $alur ?>
                                     <select name="format_nomor" id="format" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                     <?php

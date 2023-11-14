@@ -88,7 +88,7 @@
             <td>&nbsp <b>Nomor Agenda :</b></td>
             <td>: <?= $no_agenda;?></span>&nbsp &nbsp</td>
             <td style="border-left: solid 2px">&nbsp <b>Tingkat Keamanan :</b></td>
-            <td>: <?= $sifat_surat;?></span>&nbsp &nbsp</td>
+            <td>: <?= $jenis_surat;?></span>&nbsp &nbsp</td>
         </tr>
         <tr style="border: solid 2px">
             <td>&nbsp <b>Tanggal Penerimaan</b></td>
