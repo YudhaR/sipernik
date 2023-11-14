@@ -56,9 +56,9 @@ class M_referensi extends CI_Model {
 		return $this->db->get('ctr_status_surat');
 	}
 
-	 function tampil_sifat_disposisi()
+	 function tampil_petunjuk_disposisi()
 	{
-		return $this->db->get('ctr_sifat_disposisi');
+		return $this->db->get('ctr_petunjuk_disposisi');
 	}
 
 	 function konfigurasi_instansi()
@@ -125,9 +125,9 @@ class M_referensi extends CI_Model {
 	{
 		return $this->db->delete('dix_ref_format_nomor_surat', array('id' => $id));
 	}
-	 function hapus_sifat_disposisi($id)
+	 function hapus_petunjuk_disposisi($id)
 	{
-		return $this->db->delete('ctr_sifat_disposisi', array('id' => $id));
+		return $this->db->delete('ctr_petunjuk_disposisi', array('id' => $id));
 	}
 
 	function tampil_penomoran($id=NULL)

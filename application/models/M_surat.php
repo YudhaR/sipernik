@@ -155,7 +155,7 @@ class M_surat extends CI_Model {
 					LEFT JOIN ctr_jabatan AS e ON d1.kepada=e.id
 					LEFT JOIN ctr_surat_ordner AS sl ON a.surat_id=sl.surat_id
 					LEFT JOIN ctr_ordner AS l ON sl.ordner_id=l.id
-					WHERE d1.kepada=".$jabatan_id." AND a.status_diterima=0 AND sifat<>100 ".$ordisposisi." 
+					WHERE d1.kepada=".$jabatan_id." AND a.status_diterima=0 AND petunjuk<>100 ".$ordisposisi." 
 					ORDER BY a.surat_id DESC";
 
 			//echo $sql;exit();
@@ -280,9 +280,9 @@ class M_surat extends CI_Model {
 		return $this->db->query($q);
 	}
 
-	function get_sifat_disposisi()
+	function get_petunjuk_disposisi()
 	{
-		$q= $this->db->query("SELECT * from ctr_sifat_disposisi");
+		$q= $this->db->query("SELECT * from ctr_petunjuk_disposisi");
 		return $q;
 	}
 

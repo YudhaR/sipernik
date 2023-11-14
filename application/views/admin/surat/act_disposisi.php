@@ -56,11 +56,11 @@
                            </div>
                           	<div class="col-md-4">
                                 <p class="col-red">
-                                    <b>Sifat Disposisi :</b>
+                                    <b>Petunjuk Disposisi :</b>
                                 </p>
-                                <select class="form-control show-tick" name="sifat">
+                                <select class="form-control show-tick" name="petunjuk">
                                         <option value="-">- Pilih -</option>
-                                <?php foreach ($sifat_disposisi->result() as $val) {
+                                <?php foreach ($petunjuk_disposisi->result() as $val) {
                                     echo '<option  value="'.$val->id.'">'.$val->nama.'</option>';    
                                     
                                 };?>

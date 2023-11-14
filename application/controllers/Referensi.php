@@ -483,63 +483,57 @@ class Referensi extends CI_Controller {
 		redirect('Referensi/jabatan','refresh');
 	}
 
-	function sifat_disposisi($act=NULL,$enc=NULL){
+	function petunjuk_disposisi($act=NULL,$enc=NULL){
         if ($act==NULL) {
-			$a['data']	= $this->referensi->tampil_sifat_disposisi()->result_object();
-			$a['page']	= "admin/referensi/sifat_disposisi";
-			$a['title']	= "Referensi Sifat Disposisi";
+			$a['data']	= $this->referensi->tampil_petunjuk_disposisi()->result_object();
+			$a['page']	= "admin/referensi/petunjuk_disposisi";
+			$a['title']	= "Referensi Petunjuk Disposisi";
 			$a['harus_disposisi']=$this->persuratan->harus_disposisi('masuk')->num_rows();
 			$a['belum_disposisi']=$this->persuratan->belum_disposisi()->num_rows();
 			$this->load->view('pages/pages',$a);
 		}else{
 			if ($act=='edit') {
 				$id=$this->encrypt->decode(base64_decode($enc));
-				$data	= $this->db->get_where('ctr_sifat_disposisi',array('id'=>$id))->result_object();
+				$data	= $this->db->get_where('ctr_petunjuk_disposisi',array('id'=>$id))->result_object();
 				$a['enc']=base64_encode($this->encrypt->encode($data[0]->id));
 				$a['nama']=$data[0]->nama;
-				$a['keterangan']=$data[0]->keterangan;
 				$a['act']='update';
 				$a['title']	= "Edit Sifat Disposisi";
-				$this->load->view('admin/referensi/act_sifat_disposisi', $a);
+				$this->load->view('admin/referensi/act_petunjuk_disposisi', $a);
 			}
 			if ($act=='tambah'){
 				$a['nama']='';
-				$a['keterangan']='';
 				$a['enc']='';
 				$a['act']='insert';
-				$a['title']	= "Tambah Sifat Disposisi";
-				$this->load->view('admin/referensi/act_sifat_disposisi', $a);
+				$a['title']	= "Tambah Petunjuk Disposisi";
+				$this->load->view('admin/referensi/act_petunjuk_disposisi', $a);
 			}
 			if ($act=='hapus'){
 				$id = $this->encrypt->decode(base64_decode($enc));
-				$this->referensi->hapus_sifat_disposisi($id);
-				redirect('Referensi/sifat_disposisi/','refresh');
+				$this->referensi->hapus_petunjuk_disposisi($id);
+				redirect('Referensi/petunjuk_disposisi/','refresh');
 			}
 		}
 	}
 
-	function insert_sifat_disposisi(){
+	function insert_petunjuk_disposisi(){
 		$nama= $this->input->post('nama');
-		$keterangan= $this->input->post('keterangan');
 		$object = array(
 				'nama' => $nama,
-				'keterangan'=>$keterangan
 			);
-		$this->db->insert('ctr_sifat_disposisi', $object);
-		redirect('Referensi/sifat_disposisi','refresh');
+		$this->db->insert('ctr_petunjuk_disposisi', $object);
+		redirect('Referensi/petunjuk_disposisi','refresh');
 	}
 
-	function update_sifat_disposisi(){
+	function update_petunjuk_disposisi(){
         $id = $this->encrypt->decode(base64_decode($this->input->post('enc')));
 		$nama= $this->input->post('nama');
-		$keterangan= $this->input->post('keterangan');
 		$object = array(
 				'nama' => $nama,
-				'keterangan'=>$keterangan
 		);
 		$this->db->where('id', $id);
-		$this->db->update('ctr_sifat_disposisi', $object); 
-		redirect('Referensi/sifat_disposisi','refresh');
+		$this->db->update('ctr_petunjuk_disposisi', $object); 
+		redirect('Referensi/petunjuk_disposisi','refresh');
 	}
 
 	

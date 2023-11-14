@@ -4,31 +4,20 @@
                 <h2>
                    <?php echo $title;?>
                    <div class="divider"></div>
-                    <small class="col-blue">Referensi Sifat Disposisi</small>
+                    <small class="col-blue">Referensi Petunjuk Disposisi</small>
                 </h2>
             </div>
             <div class="body">
-                  <?php echo form_open('Referensi/'.$act.'_sifat_disposisi'); ?>
+                  <?php echo form_open('Referensi/'.$act.'_petunjuk_disposisi'); ?>
                     <div class="row clearfix">
-                          <div class="col-md-4 col-red">
-                              <b>Sifat Disposisi</b>
+                          <div class="col-md-10 col-red">
+                              <b>Petunjuk</b>
                               <div class="input-group">
                                   <span class="input-group-addon">
                                       <i class="fa fa-book"></i>
                                   </span>
                                   <div class="form-line">
                                       <input type="text" class="form-control" name="nama" value="<?php echo $nama;?>" required>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-md-8 col-red">
-                              <b>Keterangan</b>
-                              <div class="input-group">
-                                  <span class="input-group-addon">
-                                      <i class="fa fa-book"></i>
-                                  </span>
-                                  <div class="form-line">
-                                      <input type="text" class="form-control" name="keterangan" value="<?php echo $keterangan;?>" required>
                                   </div>
                               </div>
                           </div>

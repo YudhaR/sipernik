@@ -133,7 +133,7 @@
                             <a href="#" onClick="jalankan('Referensi/kategori_surat')">Kategori Surat</a>
                         </li>
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/sifat_disposisi')">Sifat Disposisi</a>
+                            <a href="#" onClick="jalankan('Referensi/petunjuk_disposisi')">Petunjuk Disposisi</a>
                         </li>
                         <li>
                             <a href="#" onClick="jalankan('Referensi/penomoran')">Format Penomoran</a>
