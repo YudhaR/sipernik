@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2023 at 03:30 PM
+-- Generation Time: Nov 15, 2023 at 02:21 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -86,20 +86,18 @@ CREATE TABLE `ctr_disposisi` (
   `dari` int(2) DEFAULT NULL,
   `kepada` int(2) NOT NULL,
   `tgl_disposisi` date DEFAULT NULL,
-  `isi_disposisi` varchar(300) NOT NULL,
-  `sifat` varchar(50) NOT NULL,
-  `ket_disposisi` varchar(1000) DEFAULT NULL
+  `catatan` varchar(300) NOT NULL,
+  `petunjuk` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ctr_disposisi`
 --
 
-INSERT INTO `ctr_disposisi` (`id`, `surat_id`, `dari`, `kepada`, `tgl_disposisi`, `isi_disposisi`, `sifat`, `ket_disposisi`) VALUES
-(1, 1, -1, 2, '2023-11-14', 'dzsdzsd', '5', NULL),
-(2, 1, 1, 2, '2023-11-14', 'vsfsdfsdfsd', '6', NULL),
-(3, 1, 1, 3, '2023-11-14', 'asfdsf', '4', NULL),
-(4, 1, 1, 3, '2023-11-14', 'l/kl/k', '5', NULL);
+INSERT INTO `ctr_disposisi` (`id`, `surat_id`, `dari`, `kepada`, `tgl_disposisi`, `catatan`, `petunjuk`) VALUES
+(1, 1, 1, 6, '2023-11-15', 'hmgmgh', '16'),
+(2, 1, 1, 2, '2023-11-15', 'asfasfasfaw', '4'),
+(3, 1, 1, 11, '2023-11-15', 'gdsgsdgs', '4');
 
 -- --------------------------------------------------------
 
@@ -176,6 +174,37 @@ INSERT INTO `ctr_jenis_surat` (`jenis_id`, `kode`, `nama`, `current_time`) VALUE
 (1, 'B', 'Biasa', NULL),
 (2, 'R', 'Rahasia', NULL),
 (3, 'P', 'Penting', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ctr_jenis_surat_masuk`
+--
+
+CREATE TABLE `ctr_jenis_surat_masuk` (
+  `jenis_surat_masuk_id` int(11) NOT NULL,
+  `jenis` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ctr_jenis_surat_masuk`
+--
+
+INSERT INTO `ctr_jenis_surat_masuk` (`jenis_surat_masuk_id`, `jenis`) VALUES
+(2, 'Naskah Dinas Pengaturan'),
+(3, 'Naskah Dinas Penetapan'),
+(4, 'Naskah Dinas Penugasan'),
+(5, 'Naskah Dinas Korespondensi Internal'),
+(6, 'Naskah Dinas Korespondensi Eksternal'),
+(7, 'Nota Kesepahaman'),
+(8, 'Surat Perjanjian Kerjasama'),
+(9, 'Berita Acara'),
+(10, 'Surat Keterangan'),
+(11, 'Surat Pengantar'),
+(12, 'Pengumuman'),
+(13, 'Laporan'),
+(14, 'Telaah Staff'),
+(15, 'Notula');
 
 -- --------------------------------------------------------
 
@@ -342,25 +371,37 @@ CREATE TABLE `ctr_pesan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ctr_sifat_disposisi`
+-- Table structure for table `ctr_petunjuk_disposisi`
 --
 
-CREATE TABLE `ctr_sifat_disposisi` (
+CREATE TABLE `ctr_petunjuk_disposisi` (
   `id` int(5) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `keterangan` varchar(100) NOT NULL
+  `nama` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ctr_sifat_disposisi`
+-- Dumping data for table `ctr_petunjuk_disposisi`
 --
 
-INSERT INTO `ctr_sifat_disposisi` (`id`, `nama`, `keterangan`) VALUES
-(1, 'Biasa', 'Biasa'),
-(4, 'Segera', 'Segera ditindaklanjuti'),
-(5, 'Tidak Perlu', 'Tidak Perlu'),
-(6, 'Lain-lain', 'Lain lain'),
-(7, 'Penting', 'Segera Ditindaklanjuti');
+INSERT INTO `ctr_petunjuk_disposisi` (`id`, `nama`) VALUES
+(1, 'Setuju sesuai ketentuan yang berlaku'),
+(4, 'Tolak sesuai ketentuan yang berlaku'),
+(5, 'Selesaikan sesuai ketentuan yang berlaku'),
+(6, 'Jawab sesuai ketentuan yang berlaku'),
+(8, 'Perbaiki'),
+(9, 'Teliti & Pendapat'),
+(10, 'Sesuai catatan'),
+(11, 'Untuk perhatian'),
+(12, 'Untuk diketahui'),
+(13, 'Edarkan'),
+(14, 'Bicarakan dengan saya'),
+(15, 'Bicarakan bersama dan laporkan hasilnya'),
+(16, 'Dijadwalkan'),
+(17, 'Simpan'),
+(18, 'Disiapkan'),
+(19, 'Ingatkan'),
+(20, 'Harap hadiri/diwakili'),
+(21, 'Asli kepada yang bersangkutan');
 
 -- --------------------------------------------------------
 
@@ -388,6 +429,25 @@ INSERT INTO `ctr_sifat_surat` (`sifat_id`, `kode`, `nama`, `current_time`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ctr_status_surat`
+--
+
+CREATE TABLE `ctr_status_surat` (
+  `status_id` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ctr_status_surat`
+--
+
+INSERT INTO `ctr_status_surat` (`status_id`, `status`) VALUES
+(2, 'Diterima'),
+(3, 'Surat Kembali');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ctr_surat_keluar`
 --
 
@@ -408,13 +468,6 @@ CREATE TABLE `ctr_surat_keluar` (
   `status_disposisi` char(1) DEFAULT '0' COMMENT '1 sudah disposisi 0 belum disposisi',
   `file_name` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `ctr_surat_keluar`
---
-
-INSERT INTO `ctr_surat_keluar` (`surat_id`, `no_agenda`, `format_nomor_id`, `jenis_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `tgl_kirim`, `ekspedisi`, `perihal`, `ket`, `status_disposisi`, `file_name`) VALUES
-(4, '4/KELUAR/XI/2023', 1, 3, 'W8-TUN2/4/OT.00/11/2023', '2023-11-05', '2023-11-05', 'PTUN.GTO', 'saya', '2023-11-05', 1, 'mmm', '', '0', 'task-list-add_512x512.png');
 
 -- --------------------------------------------------------
 
@@ -471,9 +524,7 @@ CREATE TABLE `ctr_surat_keluar_baru` (
 --
 
 INSERT INTO `ctr_surat_keluar_baru` (`surat_id`, `no_agenda`, `format_nomor_id`, `format_no_surat_id`, `jenis_id`, `kategori_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `tgl_kirim`, `ekspedisi`, `perihal`, `ket`, `status_disposisi`, `file_name`) VALUES
-(1, '1/KELUAR/X/2023', 1, 1, 1, 3, '1/KPTUN.W8-TUN2/OT.00/10/2023', '2023-10-13', '2023-10-13', 'PTUN.GTO', 'sddwed', '2023-10-13', 1, 'wed', 'wed', '0', NULL),
-(2, '2/KELUAR/X/2023', 1, 1, 1, 7, '2/KPTUN.W8-TUN2/OT.00/10/2023', '2023-10-13', '2023-10-13', 'PTUN.GTO', 'hbuhb', '2023-10-13', 1, 'huihn', 'hbh', '0', NULL),
-(3, '3/KELUAR/X/2023', 1, 1, 1, 2, '3/KPTUN.W8-TUN2/OT.00/10/2023', '2023-10-13', '2023-10-13', 'PTUN.GTO', 'sads', '2023-10-13', 1, 'dasd', '', '0', '705a54300692591fe4885fe0acc95b9a1.jpg');
+(1, '1/KELUAR/XI/2023', 1, 2, 2, 9, '1/SEK.PTUN.W8-TUN2/OT.00/11/2023', '2023-11-15', '2023-11-15', 'PTUN.GTO', 'awdawdawd', '2023-11-15', 1, 'fwardawr', 'adwadasd', '0', NULL);
 
 -- --------------------------------------------------------
 
@@ -486,6 +537,8 @@ CREATE TABLE `ctr_surat_masuk` (
   `no_agenda` varchar(100) NOT NULL,
   `balasan` varchar(20) NOT NULL DEFAULT '-',
   `sifat_id` int(5) NOT NULL,
+  `status_id` int(5) NOT NULL,
+  `jenis_surat_masuk_id` int(5) NOT NULL,
   `no_surat` char(100) NOT NULL,
   `tgl_surat` date NOT NULL,
   `tgl_terima` date NOT NULL,
@@ -502,8 +555,9 @@ CREATE TABLE `ctr_surat_masuk` (
 -- Dumping data for table `ctr_surat_masuk`
 --
 
-INSERT INTO `ctr_surat_masuk` (`surat_id`, `no_agenda`, `balasan`, `sifat_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `perihal`, `ket`, `status_disposisi`, `status_diterima`, `file_name`) VALUES
-(1, '1/MASUK/XI/2023', '-', 1, '1', '2023-11-05', '2023-11-05', 'rsry', 'Ketua PTUN.GTO', 'guiou', '', '1', '0', 0x3730356135343330303639323539316665343838356665306163633935623961332e6a7067);
+INSERT INTO `ctr_surat_masuk` (`surat_id`, `no_agenda`, `balasan`, `sifat_id`, `status_id`, `jenis_surat_masuk_id`, `no_surat`, `tgl_surat`, `tgl_terima`, `pengirim`, `untuk`, `perihal`, `ket`, `status_disposisi`, `status_diterima`, `file_name`) VALUES
+(1, '1/MASUK/XI/2023', '-', 3, 3, 15, '4', '2023-11-15', '2023-11-15', 'asdwa', 'Ketua PTUN.GTO', 'wad', 'asdwa', '1', '0', 0x73656e74696d656e742d616e616c79736973352e706e67),
+(2, '2/MASUK/XI/2023', '-', 1, 2, 2, '4', '2023-11-15', '2023-11-15', 'esrse', 'Ketua PTUN.GTO', 'rsdres', 'rsresr', '0', '0', 0x756e63656b6c69732e706e67);
 
 -- --------------------------------------------------------
 
@@ -517,6 +571,13 @@ CREATE TABLE `ctr_surat_ordner` (
   `surat_id` int(5) NOT NULL,
   `tgl_ordner` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ctr_surat_ordner`
+--
+
+INSERT INTO `ctr_surat_ordner` (`id`, `ordner_id`, `surat_id`, `tgl_ordner`) VALUES
+(1, 1, 1, '2023-11-15');
 
 -- --------------------------------------------------------
 
@@ -905,7 +966,7 @@ CREATE TABLE `sys_users` (
 --
 
 INSERT INTO `sys_users` (`userid`, `pegawai_id`, `groupid`, `nip_nrp`, `fullname`, `username`, `password`, `email`, `last_login`, `block`, `code_activation`) VALUES
-(1, 1, 1, '-', 'Super Administrator', 'admin', '28cb9b46551251d23a63bd4c6d0b5832', 'ptun.gorontalo@gmail.com', '2023-11-14 10:27:58', 0, 'd1c5a1d07ec79ad891c3e692cba2b420'),
+(1, 1, 1, '-', 'Super Administrator', 'admin', '28cb9b46551251d23a63bd4c6d0b5832', 'ptun.gorontalo@gmail.com', '2023-11-15 05:57:18', 0, 'd1c5a1d07ec79ad891c3e692cba2b420'),
 (2, 45, 1, '196801201997031001', 'SUTIYONO, S.H., M.H.', 'ketua', '32e45d9c377ef416206f1133c1d685dc', 'bandaaceh@ptun.org', '2023-08-21 02:40:56', 0, '1202a0a5d66c6361efef9a10fdb3e852'),
 (9, 14, 4, '196611251990031001', 'SYAMSUL BAKHRY, S.H., M.H.', 'sekretaris', 'db57d0045057bdb0ce2ae614108ac8fd', 'bandaaceh@ptun.org', '2023-08-21 02:20:24', 0, '766c8c0c3f494c45bc9522b636b36905'),
 (10, 13, 7, '197905162006041004', 'JAENAL ARIFIN SUJOKO, S.H.', 'plthukum', '811848155996fbb492b042eadb2f41a3', 'bandaaceh@ptun.org', '2023-05-23 04:46:37', 0, '04b4d3a5aaa80dbe4aa5f276644a78c9'),
@@ -979,7 +1040,7 @@ INSERT INTO `sys_user_online` (`session_id`, `userid`, `host_address`, `login_ti
 ('9', 9, '10.236.0.2', '2023-08-20 18:20:24', 'Chrome 115.0.0.0 Windows 10', '', '', NULL, NULL),
 ('32', 32, '10.236.0.2', '2023-08-20 18:20:39', 'Chrome 116.0.0.0 Windows 10', '', '', NULL, NULL),
 ('2', 2, '10.236.0.2', '2023-08-20 18:40:55', 'Firefox 116.0 Windows 10', '', '', NULL, NULL),
-('1', 1, '::1', '2023-11-14 03:27:58', 'Chrome 119.0.0.0 Windows 10', '', '', NULL, NULL);
+('1', 1, '::1', '2023-11-14 22:57:18', 'Chrome 119.0.0.0 Windows 10', '', '', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1018,6 +1079,12 @@ ALTER TABLE `ctr_jenis_surat`
   ADD PRIMARY KEY (`jenis_id`);
 
 --
+-- Indexes for table `ctr_jenis_surat_masuk`
+--
+ALTER TABLE `ctr_jenis_surat_masuk`
+  ADD PRIMARY KEY (`jenis_surat_masuk_id`);
+
+--
 -- Indexes for table `ctr_kategori_surat`
 --
 ALTER TABLE `ctr_kategori_surat`
@@ -1049,9 +1116,9 @@ ALTER TABLE `ctr_pesan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ctr_sifat_disposisi`
+-- Indexes for table `ctr_petunjuk_disposisi`
 --
-ALTER TABLE `ctr_sifat_disposisi`
+ALTER TABLE `ctr_petunjuk_disposisi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
@@ -1060,6 +1127,12 @@ ALTER TABLE `ctr_sifat_disposisi`
 --
 ALTER TABLE `ctr_sifat_surat`
   ADD PRIMARY KEY (`sifat_id`);
+
+--
+-- Indexes for table `ctr_status_surat`
+--
+ALTER TABLE `ctr_status_surat`
+  ADD PRIMARY KEY (`status_id`);
 
 --
 -- Indexes for table `ctr_surat_keluar`
@@ -1171,7 +1244,7 @@ ALTER TABLE `ctr_barang`
 -- AUTO_INCREMENT for table `ctr_disposisi`
 --
 ALTER TABLE `ctr_disposisi`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `ctr_ekspedisi`
 --
@@ -1187,6 +1260,11 @@ ALTER TABLE `ctr_jabatan`
 --
 ALTER TABLE `ctr_jenis_surat`
   MODIFY `jenis_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `ctr_jenis_surat_masuk`
+--
+ALTER TABLE `ctr_jenis_surat_masuk`
+  MODIFY `jenis_surat_masuk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `ctr_kategori_surat`
 --
@@ -1213,15 +1291,20 @@ ALTER TABLE `ctr_permintaan_barang`
 ALTER TABLE `ctr_pesan`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `ctr_sifat_disposisi`
+-- AUTO_INCREMENT for table `ctr_petunjuk_disposisi`
 --
-ALTER TABLE `ctr_sifat_disposisi`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `ctr_petunjuk_disposisi`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `ctr_sifat_surat`
 --
 ALTER TABLE `ctr_sifat_surat`
   MODIFY `sifat_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `ctr_status_surat`
+--
+ALTER TABLE `ctr_status_surat`
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `ctr_surat_ordner`
 --
