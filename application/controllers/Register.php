@@ -138,15 +138,14 @@ class Register extends CI_Controller
 			} else if ($act == "edit") {
 				$row = $this->persuratan->surat_baru($alur, $surat_id)->result();
 				$row_masuk = $this->persuratan->surat($alur, $surat_id)->result();
-				$no_surat = explode("/", $row[0]->no_surat);
-				$format_no_surat_id = $row[0]->format_no_surat_id;
-				$kategori_id = $row[0]->kategori_id;
-				$q = $this->db->query("SELECT jabatan FROM format_nomor_surat WHERE id=$format_no_surat_id");
-				$jabatan = $q->result();
-				$k = $this->db->query("SELECT kategori FROM ctr_kategori_surat WHERE id_kategori=$kategori_id");
-				$kategori = $k->result();
-				
 				if ($alur == "keluar") {
+					$no_surat = explode("/", $row[0]->no_surat);
+					$format_no_surat_id = $row[0]->format_no_surat_id;
+					$kategori_id = $row[0]->kategori_id;
+					$q = $this->db->query("SELECT jabatan FROM format_nomor_surat WHERE id=$format_no_surat_id");
+					$jabatan = $q->result();
+					$k = $this->db->query("SELECT kategori FROM ctr_kategori_surat WHERE id_kategori=$kategori_id");
+					$kategori = $k->result();
 					$data['tgl_kirim']			= $row[0]->tgl_kirim;
 					$data['ekspedisi']			= $row[0]->ekspedisi;
 					$data['no_surat']			= $no_surat[0];
@@ -929,24 +928,25 @@ class Register extends CI_Controller
 	function hapus_surat($alur, $enc)
 	{
 		$id = $this->encrypt->decode(base64_decode($enc));
-		$q = $this->db->query("SELECT format_no_surat_id FROM ctr_surat_keluar_baru WHERE surat_id=$id");
-		$format_no_surat_id = $q->result();
 
-		if (count($format_no_surat_id) > 0) {
-			$format_no_surat_id = $format_no_surat_id[0]->format_no_surat_id;
-		}
-		$p = $this->db->query("SELECT jabatan FROM format_nomor_surat WHERE id=$format_no_surat_id");
-		$posisi = $p->result();
-		if (count($posisi) > 0) {
-			$posisi = strtolower($posisi[0]->jabatan);
-		}
 		// print_r($posisi);
 		// 	die();
 
 		if ($alur == "keluar") {
+			$q = $this->db->query("SELECT format_no_surat_id FROM ctr_surat_keluar_baru WHERE surat_id=$id");
+			$format_no_surat_id = $q->result();
+	
+			if (count($format_no_surat_id) > 0) {
+				$format_no_surat_id = $format_no_surat_id[0]->format_no_surat_id;
+			}
+			$p = $this->db->query("SELECT jabatan FROM format_nomor_surat WHERE id=$format_no_surat_id");
+			$posisi = $p->result();
+			if (count($posisi) > 0) {
+				$posisi = strtolower($posisi[0]->jabatan);
+			}
 			$this->db->delete('ctr_surat_keluar_baru', array('surat_id' => $id));
 			redirect('Register/surat/' . $alur . '/' . $posisi, 'refresh');
-		} else {
+		} else if ($alur == "masuk"){
 			$this->db->delete('ctr_surat_masuk', array('surat_id' => $id));
 			redirect('Register/surat/' . $alur, 'refresh');
 		}
