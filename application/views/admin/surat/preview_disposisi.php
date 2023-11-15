@@ -63,85 +63,104 @@
   </h3>
 </div>
 <div id="div_print">
-    <div class="qr_code" style="position:absolute;right:20px;top:220px;">
-        <div class="card" style="padding:1px">
-        <a><img width="100px" src="<?php echo $pictQR;?>"/></a>
-        </div>
-    </div>
     <table>
       <col width="25%">
       <col width="20%">
       <col width="30%">
       <col width="25%">
       <tbody>
-        <tr>
-            <td colspan="4" align="center">
-              <b style="font-size: 30px;"><?php echo $this->session->userdata('instansi',TRUE) ?></b><br>
-              <span><?php echo $this->session->userdata('alamat_instansi',TRUE) ?></span></h3>
-            </td>
+      <tr>
+          <td colspan="4" align="center">
+              <div style="display: flex; align-items: center;">
+                  <img src="<?php echo base_url('resources/img/logo-ma.jpg'); ?>" alt="Logo Image" style="width: 120px; margin-left:3rem; margin-right: 3rem;">
+                  <div>
+                      <b style="font-size: 20px;">MAHKAMAH AGUNG REPUBLIK INDONESIA<br>DIREKTORAT JENDERAL BADAN PERADILAN MILITER<br>DAN PERADILAN TATA USAHA NEGARA<br>PENGADILAN TINGGI TATA USAHA NEGARA MANADO<br>PENGADILAN TATA USAHA NEGARA GORONTALO</b><br>
+                      <span>Jalan Prof. Dr. Aloei Saboe, Desa Toto Selatan, Kecamatan Kabila<br>Kabupaten Bone Bolango, Gorontalo 96128, www.ptun-gorontalo.go.id, info@ptun-gorontalo.go.id</span>
+                  </div>
+              </div>
+          </td>
+      </tr>
+        <tr >
+            <td colspan="4" align="center" style="border-top: solid 2px; font-size: 20px;"><b>LEMBAR DISPOSISI</b></td>
         </tr>
         <tr >
-            <td colspan="4" align="center" style="border-top: solid 2px"><b>LEMBAR DISPOSISI</b></td>
+            <td colspan="4" align="center" style="border-top: solid 2px; font-size: 15px;"><b>PERHATIAN : Dilarang memisahkan sehelai Naskah Dinas pun yang tergabung dalam berkas ini.</b></td>
         </tr>
         <tr>
-        <tr style="border: solid 2px">
-            <td>&nbsp <b>Nomor Agenda :</b></td>
-            <td>: <?= $no_agenda;?></span>&nbsp &nbsp</td>
-            <td style="border-left: solid 2px">&nbsp <b>Tingkat Keamanan :</b></td>
-            <td>: <?= $jenis_surat;?></span>&nbsp &nbsp</td>
+        <tr style="border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">
+           <td style="width: 40%; border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp <b>Nomor Naskah Dinas</b>&nbsp&nbsp&nbsp&nbsp: <?= $no_surat;?></td>
+           <td style="width: 25%; border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Status</b>&nbsp&nbsp:  <?= $status;?></td>
+           <td colspan="2" valign="top" style="width: 35%;border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">&nbsp<b>Diterima Tanggal</b>&nbsp: <?= $tgl_terima_kirim;?></td>
         </tr>
-        <tr style="border: solid 2px">
-            <td>&nbsp <b>Tanggal Penerimaan</b></td>
-            <td>: <?= $tgl_terima_kirim;?></span>&nbsp &nbsp</td>
-            <td style="border-left: solid 2px">&nbsp <b>Tanggal Penyelesaian :</b></td>
-            <td> : </span>&nbsp &nbsp</td>
+        <tr style="border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">
+           <td style="width: 40%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp <b>Tanggal Naskah Dinas</b>&nbsp&nbsp: <?= $tgl_surat;?></td>
+           <td style="width: 25%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Sifat</b>&nbsp&nbsp&nbsp&nbsp&nbsp:  <?= $nama;?></td>
+           <td colspan="2" valign="top" style="width: 35%;border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">&nbsp<b>Nomor Agenda</b>&nbsp&nbsp&nbsp&nbsp: <?= $no_agenda;?></td>
         </tr>
-        <tr>
-            <td>&nbsp &nbsp<b>Tanggal dan Nomor Surat</b></td>
-            <td colspan="2" class="dot" >:<?= $tgl_surat ." / ".$no_surat;?>&nbsp &nbsp</td>
+        <tr style="border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">
+           <td style="width: 40%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp <b>Lampiran</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: </td>
+           <td style="width: 25%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Jenis</b>&nbsp&nbsp&nbsp&nbsp:  <?= $jenis;?></td>
         </tr>
-        <tr>
-           <td>&nbsp &nbsp<b>Dari</b></td><td class="dot" colspan="2">: <?= $pengirim;?> </td>
+        <tr >
+            <td colspan="4" style="border-top: solid 2px; font-size: 15px;">&nbsp<b>Dari</b>&nbsp&nbsp&nbsp&nbsp: <?= $pengirim;?></td>
         </tr>
-        <tr>
-           <td>&nbsp &nbsp<b>Untuk</b></td><td class="dot" colspan="2">: <?= $untuk;?> </td>
+        <tr >
+            <td colspan="4" style="border-top: none; font-size: 15px;">&nbsp<b>Hal</b>&nbsp&nbsp&nbsp&nbsp&nbsp: <?= $perihal;?></td>
         </tr>
         <tr>
-            <td style="vertical-align:top">&nbsp &nbsp<b>Ringkasan Isi</b></td>
-            <td colspan="2" class="dot" ><p>: <?= $perihal;?></p>&nbsp &nbsp</td>
+            <td colspan="1" align="center" style="width: 50%; border: solid 2px; font-size: 15px;">
+              <img src="<?php echo base_url('resources/img/unceklis.png'); ?>" alt="Unceklis Image" style="width: 30px; vertical-align: middle;">
+              <b>Sangat Segera</b>
+            </td>
+            <td colspan="3" align="center" style="width: 50%; border: solid 2px; font-size: 15px;">
+              <img src="<?php echo base_url('resources/img/unceklis.png'); ?>" alt="Unceklis Image" style="width: 30px; vertical-align: middle;">
+              <b>Segera</b>
+            </td>
         </tr>
         <tr>
-            <td>&nbsp &nbsp<b>Lampiran</b></td>
-            <td colspan="2" class="dot" >:&nbsp &nbsp</td>
-        </tr>
-        <tr style="border: solid 2px">
-           <td colspan="2" style="border: solid 2px" align="center" valign="top"><b>Disposisi </b></td>
-           <td align="center" style="border: solid 2px" valign="top"><b>Diteruskan Kepada Test 123: </b> </td>
-           <td align="center" valign="top"><b>Paraf</b> </td>
-        </tr>
-        <tr style="height: 350px" valign="top">
-          <td colspan="2" style="border: solid 2px" align="left" >
-          <?php if(isset($data)){ 
-                echo '<ol>';
+            <td colspan="1"valign="top" style="width: 50%;border-top: solid 2px; border-left: solid 2px;border-bottom: solid 2px;border-right: none;font-size: 15px;">
+              &nbsp<b><u>DISPOSISI KEPADA:</u></b><br><br>
+              <?php if(isset($data)){ 
                 foreach ($data as $val) {
-                  echo    '<li><u>Dari : '.$val->dari_nama.' kepada : '.$val->kepada_nama.' </u><br>Tanggal : '.tgl_indo($val->tgl_disposisi).'<br>'.$val->isi_disposisi.'</li><br><br>';
+                  echo '<img src="' . base_url('resources/img/unceklis.png') . '" alt="Unceklis Image" style="width: 30px; vertical-align: middle;">';
+                  echo '<u>Dari : ' . $val->dari_nama . ' kepada : ' . $val->kepada_nama . ' </u><br>';
+                  echo '<div style=" margin-left: 30px;">';
+                  echo 'Tanggal : ' . tgl_indo($val->tgl_disposisi) . '<br>' . $val->isi_disposisi . '<br>';
+                  echo '</div>';
                 }
-                echo '<ol>';
-            } ;?> 
-          </td>
-          <td align="left" style="border: solid 2px">
-            <?php if(isset($data)){ 
-                echo '<ol>';
-                $n=0;
-                foreach ($data as $val) {
-                  echo    '<li>'.$val->kepada_nama.'</li><br>';
-                  $n++;
-                }
-                echo '<ol>';
-              } ;?> 
-          </td>
-
+              } ;?>
+              &nbsp<b><u>CATATAN:</u></b><br><br>
+                  <div style="margin-left: 30px;">
+                      <?= $catatan; ?><br>
+                  </div>
+            </td>
+            <td colspan="3" valign="top" style="width: 50%;border-top: solid 2px; border-left: none;border-bottom: solid 2px;border-right: solid 2px; font-size: 15px;">
+              &nbsp<b><u>PETUNJUK:</u></b><br>
+              <?php if (isset($petunjuk)) {
+                  foreach ($petunjuk as $val) {
+                      $imgSrc = ($val->nama == $petunjukterakhir) ? base_url('resources/img/ceklis.png') : base_url('resources/img/unceklis.png');
+                      echo '<img src="' . $imgSrc . '" alt="Ceklis Image" style="width: 30px; vertical-align: middle;">';
+                      echo $val->nama;
+                      echo '<br>';
+                  }
+              };?>
+            </td>
         </tr>
-        </tbody>
+        <tr style="border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">
+           <td colspan="1" style="width: 50%; border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Tanggal Kirim untuk Proses </b> : <?= $tgl_disposisi; ?></td>
+           <td colspan="3" style="width: 50%; border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Diterima Oleh</b> :</td>
+        </tr>
+        <tr style="border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: 2px solid;">
+           <td colspan="1" style="width: 50%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom:2px solid;" valign="top">&nbsp<b>Diajukan Kembali Tanggal </b>:</td>
+           <td colspan="3" style="width: 50%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: 2px solid;" valign="top">&nbsp<b>Diterima Tanggal</b> :</td>
+        </tr>
+        <tr style="border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">
+           <td colspan="1" style="width: 50%; border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Tanggal Kembali untuk Proses  </b> : </td>
+           <td colspan="3" style="width: 50%; border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;" valign="top">&nbsp<b>Tanggal selesai dari Pejabat yang memberi diposisi </b>:</td>
+        </tr>
+        <tr style="border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom: 2px solid;">
+           <td colspan="1" style="width: 50%; border-top: none;  border-right: 2px solid; border-left: 2px solid; border-bottom:2px solid;" valign="top">&nbsp<b>Diterima Oleh</b> :</td>
+        </tr>
+      </tbody>
     </table>
 </div>

@@ -280,11 +280,38 @@ class M_surat extends CI_Model {
 		return $this->db->query($q);
 	}
 
+	function get_catatan_disposisi($surat_id = NULL, $disposisi_id = NULL){
+		$where = ($surat_id != NULL) ? " WHERE dis.surat_id = $surat_id" : "";
+		$and = ($disposisi_id != NULL) ? " AND dis.id = $disposisi_id" : "";
+	
+		$q = "SELECT dis.*
+			  FROM ctr_disposisi AS dis
+			  $where $and
+			  AND dis.id = (SELECT MAX(id) FROM ctr_disposisi WHERE surat_id = dis.surat_id)"; 
+			  
+		return $this->db->query($q);
+	}
+
 	function get_petunjuk_disposisi()
 	{
 		$q= $this->db->query("SELECT * from ctr_petunjuk_disposisi");
 		return $q;
 	}
+
+	function get_petunjuk_terakhir_disposisi($surat_id = NULL, $disposisi_id = NULL)
+	{
+		$where = ($surat_id != NULL) ? " WHERE dis.surat_id = $surat_id" : "";
+		$and = ($disposisi_id != NULL) ? " AND dis.id = $disposisi_id" : "";
+	
+		$q = "SELECT pd.nama
+			  FROM ctr_disposisi AS dis
+			  LEFT JOIN ctr_petunjuk_disposisi AS pd ON dis.petunjuk = pd.id
+			  $where $and
+			  AND dis.id = (SELECT MAX(id) FROM ctr_disposisi WHERE surat_id = dis.surat_id)"; 
+			  
+		return $this->db->query($q);
+	}
+	
 
 	function hapus_surat($alur,$id)
 	{
