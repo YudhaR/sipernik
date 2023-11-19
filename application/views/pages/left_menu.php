@@ -118,16 +118,16 @@
                     </a>
                     <ul class="ml-menu">
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/sifat_surat')">Sifat Surat</a>
+                            <a href="#" onClick="jalankan('Referensi/sifat_surat')">Sifat Surat Masuk</a>
                         </li>
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/status_surat')">Status Surat</a>
+                            <a href="#" onClick="jalankan('Referensi/status_surat')">Status Surat Masuk</a>
                         </li>
                         <li>
                             <a href="#" onClick="jalankan('Referensi/jenis_surat_masuk')">Kategori Surat Masuk</a>
                         </li>
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/jenis_surat')">Jenis Surat (Surat Keluar)</a>
+                            <a href="#" onClick="jalankan('Referensi/jenis_surat')">Jenis Surat Keluar</a>
                         </li>
                         <li>
                             <a href="#" onClick="jalankan('Referensi/kategori_surat')">Kategori Surat Keluar</a>

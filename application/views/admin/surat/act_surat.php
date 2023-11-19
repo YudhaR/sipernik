@@ -31,7 +31,7 @@
                                     Nomor Agenda:
                                     <div class="input-group">
                                         <div class="form-line">
-                                            <input type="text" id="nomor_agenda" class="form-control" name="no_agenda" readonly placeholder="" value="<?php echo $no_agenda; ?>" readonly>
+                                            <input type="text" id="nomor_agenda" class="form-control" name="no_agenda" placeholder="" value="<?php echo $no_agenda; ?>" >
                                         </div>
                                     </div>
                                 </div>
@@ -335,10 +335,20 @@
                                 <div class="col-sm-4">
                                     <b class="p-l-20">E-doc tersimpan :</b>
                                     <div class="icon">
-                                     
-                                        <div class="image p-t-10 p-l-20">
-                                            <img src="<?php echo base_url('upload/surat_' . $alur) . "/" . $file_name ?>" height="50" alt="-" />
-                                        </div>
+                                    <div class="image p-t-10 p-l-20">
+                                        <?php if ($alur == "keluar") { ?>
+                                            <img src="<?php echo base_url('upload/surat_' . $alur) . '/' . $jabatan . '/' . $kategori . "/" . $file_name ?>" height="50" alt="-" />
+                                        <?php } else { 
+                                            		$p = $this->db->query("SELECT jenis FROM ctr_jenis_surat_masuk WHERE jenis_surat_masuk_id=$jenis_surat_masuk_id");
+                                                    $jenis_surat_masuk = $p->result();
+                                                    
+                                                    if (count($jenis_surat_masuk) > 0) {
+                                                        $jenis_surat_masuk = $jenis_surat_masuk[0]->jenis;
+                                                    }
+                                                    ?>
+                                            <img src="<?php echo base_url('upload/surat_' . $alur) . '/' . $jenis_surat_masuk . "/" . $file_name ?>" height="50" alt="-" />
+                                        <?php } ?>
+                                    </div>
                                         <a class="p-l-20"x href="<?php echo base_url('upload/surat_' . $alur) . "/" . $file_name ?>"><?php echo $file_name ?></a>
                                         <input name="ada_file" type="hidden" value="<?php echo $file_name ?>" />
                                     </div>

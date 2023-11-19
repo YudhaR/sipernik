@@ -349,6 +349,7 @@ class Register extends CI_Controller
 					} else {
 						$row = $this->persuratan->surat($alur, $surat_id)->result();
 					}
+					$data['jenis_surat_masuk_id']= $row[0]->jenis_surat_masuk_id;
 					$data['list_disposisi']		= $this->persuratan->get_disposisi($surat_id);
 					$nama_file_qr = preg_replace('/[^a-zA-Z0-9_.]/', '', $row[0]->no_agenda);
 					$qrLink = $this->generate_qr->qr_code(base_url() . "Qrscan/st/disposisi/" . $surat_id, "disposisi_" . $nama_file_qr);
@@ -746,6 +747,12 @@ class Register extends CI_Controller
 			$sifat_id = $this->input->post('sifat_surat', TRUE);
 			$status_id = $this->input->post('status_surat', TRUE);
 			$jenis_surat_masuk_id = $this->input->post('jenis_surat_masuk', TRUE);
+			$p = $this->db->query("SELECT jenis FROM ctr_jenis_surat_masuk WHERE jenis_surat_masuk_id=$jenis_surat_masuk_id");
+			$jenis_surat_masuk = $p->result();
+			
+			if (count($jenis_surat_masuk) > 0) {
+				$jenis_surat_masuk = $jenis_surat_masuk[0]->jenis;
+			}
 		} else if ($alur == "keluar") {
 			$jenis_id = $this->input->post('jenis_surat', TRUE);
 		}
@@ -771,7 +778,10 @@ class Register extends CI_Controller
 			$surat_id = NULL;
 		}
 
-		$this->config_file($alur);
+
+		
+
+		$this->config_file($alur, "", "", $jenis_surat_masuk);
 		if (!$this->upload->do_upload('file_surat')) {
 			$data_file = array('upload_data' => $this->upload->data());
 			$data = array(
@@ -982,12 +992,15 @@ class Register extends CI_Controller
 		redirect('Register/surat/masuk/disposisi/' . $enc, 'refresh');
 	}
 
-	function config_file($alur, $jabatan = NULL, $kategori = NULL)
+	function config_file($alur, $jabatan = NULL, $kategori = NULL, $jenis_surat_masuk=NULL)
 	{
 		if ($alur == "keluar") {
 			$config['upload_path'] 		= './upload/surat_' . $alur . '/' . $jabatan . '/' . $kategori;
 		} else {
-			$config['upload_path'] 		= './upload/surat_' . $alur;
+			$config['upload_path'] 		= './upload/surat_' . $alur . '/' . $jenis_surat_masuk;
+		}
+		if (!is_dir($config['upload_path'])) {
+			mkdir($config['upload_path'], 0777, true);
 		}
 		$config['allowed_types'] 	= 'jpg|png|pdf|doc|docx|rar';
 		$config['max_size']			= '80000';

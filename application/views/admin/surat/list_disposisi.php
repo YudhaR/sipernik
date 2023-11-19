@@ -74,10 +74,15 @@
                 
                 <?php
                 if ($alur == "masuk") {
-
+                  $p = $this->db->query("SELECT jenis FROM ctr_jenis_surat_masuk WHERE jenis_surat_masuk_id=$jenis_surat_masuk_id");
+                  $jenis_surat_masuk = $p->result();
+                  
+                  if (count($jenis_surat_masuk) > 0) {
+                      $jenis_surat_masuk = $jenis_surat_masuk[0]->jenis;
+                  }
                 ?>
                 <div class="image p-t-10">
-                  <img src="<?php echo base_url('upload/surat_' . $alur) . "/" . $file_name ?>" height="150" alt="<?php echo $file_name ?>" />
+                  <img src="<?php echo base_url('upload/surat_' . $alur) . '/' . $jenis_surat_masuk . "/" . $file_name ?>" height="50" alt="-" />
                 </div>
                   <a class="text-center" href="<?php echo base_url('upload/surat_' . $alur) . "/" . $file_name ?>" target="_blank">View / Download</a>
                 <?php
