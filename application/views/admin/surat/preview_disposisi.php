@@ -39,12 +39,13 @@
     height: 100px;
   } 
   #div_print{
-    font-size: 140%;
-    width: 96%;
+    font-size: 130%;
+    width: 100%;
     position: absolute;
-    left: 50px;
+    left: 30px;
     top: 50px;
   }
+
     table {border: solid 2px #000; border-collapse: collapse; width: 96%;padding:20px;}
     tr { border:none;}
     td { padding: 7px 5px}
@@ -63,28 +64,28 @@
   </h3>
 </div>
 <div id="div_print">
+  <div class="qr_code" style="position:absolute;top:50px;">
+          <img src="<?php echo base_url('resources/img/logo-ma.jpg'); ?>" alt="Logo Image" style="width: 150px; margin-left:5rem;">
+  </div>
     <table>
       <col width="25%">
       <col width="20%">
       <col width="30%">
       <col width="25%">
       <tbody>
-      <tr>
-          <td colspan="4" align="center">
-              <div style="display: flex; align-items: center;">
-                  <img src="<?php echo base_url('resources/img/logo-ma.jpg'); ?>" alt="Logo Image" style="width: 120px; margin-left:3rem; margin-right: 3rem;">
-                  <div>
-                      <b style="font-size: 20px;">MAHKAMAH AGUNG REPUBLIK INDONESIA<br>DIREKTORAT JENDERAL BADAN PERADILAN MILITER<br>DAN PERADILAN TATA USAHA NEGARA<br>PENGADILAN TINGGI TATA USAHA NEGARA MANADO<br>PENGADILAN TATA USAHA NEGARA GORONTALO</b><br>
-                      <span>Jalan Prof. Dr. Aloei Saboe, Desa Toto Selatan, Kecamatan Kabila<br>Kabupaten Bone Bolango, Gorontalo 96128, www.ptun-gorontalo.go.id, info@ptun-gorontalo.go.id</span>
-                  </div>
-              </div>
-          </td>
-      </tr>
+        
         <tr >
-            <td colspan="4" align="center" style="border-top: solid 2px; font-size: 20px;"><b>LEMBAR DISPOSISI</b></td>
+            <td colspan="4" align="center" style="margin-top : 15px;border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none; font-size: 20px;"><b>MAHKAMAH AGUNG REPUBLIK INDONESIA<br>DIREKTORAT JENDERAL BADAN PERADILAN MILITER<br>DAN PERADILAN TATA USAHA NEGARA<br>PENGADILAN TINGGI TATA USAHA NEGARA MANADO<br>PENGADILAN TATA USAHA NEGARA GORONTALO</b><br></td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center" style="position: relative; top: -10px; border-top: none; border-right: 2px solid; border-left: 2px solid; border-bottom: 2px solid; font-size: 15px;">Jalan Prof. Dr. Aloei Saboe, Desa Toto Selatan, Kecamatan Kabila<br>Kabupaten Bone Bolango, Gorontalo 96128, www.ptun-gorontalo.go.id, info@ptun-gorontalo.go.id</td>
+        </tr>
+
+        <tr >
+            <td colspan="4" align="center" style="border: solid 2px; font-size: 20px;"><b>LEMBAR DISPOSISI</b></td>
         </tr>
         <tr >
-            <td colspan="4" align="center" style="border-top: solid 2px; font-size: 15px;"><b>PERHATIAN : Dilarang memisahkan sehelai Naskah Dinas pun yang tergabung dalam berkas ini.</b></td>
+            <td colspan="4" align="center" style="border: solid 2px; font-size: 15px;"><b>PERHATIAN : Dilarang memisahkan sehelai Naskah Dinas pun yang tergabung dalam berkas ini.</b></td>
         </tr>
         <tr>
         <tr style="border-top: 2px solid;  border-right: 2px solid; border-left: 2px solid; border-bottom: none;">
@@ -130,15 +131,29 @@
                 }
               } ;?>
               &nbsp<b><u>CATATAN:</u></b><br><br>
-                  <div style="margin-left: 30px;">
-                      <?= $catatan; ?><br>
+                  <div>
+                  <?php if(isset($data)){ 
+                    foreach ($data as $val) {
+                      echo '<img src="' . base_url('resources/img/unceklis.png') . '" alt="Unceklis Image" style="width: 30px; vertical-align: middle;">';
+                      echo '<u>Dari : ' . $val->dari_nama . ' kepada : ' . $val->kepada_nama . ' </u><br>';
+                      echo '<div style=" margin-left: 30px;">';
+                      echo 'Catatan : ' . $val->catatan . '<br>';
+                      echo '</div>';
+                    }
+                  } ;?>
                   </div>
             </td>
             <td colspan="3" valign="top" style="width: 50%;border-top: solid 2px; border-left: none;border-bottom: solid 2px;border-right: solid 2px; font-size: 15px;">
               &nbsp<b><u>PETUNJUK:</u></b><br>
               <?php if (isset($petunjuk)) {
                   foreach ($petunjuk as $val) {
-                      $imgSrc = ($val->nama == $petunjukterakhir) ? base_url('resources/img/ceklis.png') : base_url('resources/img/unceklis.png');
+                    $imgSrc = base_url('resources/img/unceklis.png'); 
+                        foreach ($data as $val1) {
+                            if ($val->id == $val1->petunjuk) {
+                                $imgSrc = base_url('resources/img/ceklis.png');
+                                break; 
+                        }
+                    }
                       echo '<img src="' . $imgSrc . '" alt="Ceklis Image" style="width: 30px; vertical-align: middle;">';
                       echo $val->nama;
                       echo '<br>';

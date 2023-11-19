@@ -432,13 +432,10 @@ class Register extends CI_Controller
 				} else if ($act_extra == "preview") {
 					if ($alur == "masuk") {
 						$surat	= $this->persuratan->surat($alur, $surat_id)->result_object();
-						$petunjuk	= $this->persuratan->get_petunjuk_terakhir_disposisi($surat_id)->result_object();
 						$dispo = $this->persuratan->get_catatan_disposisi($surat_id)->result_object();
 						$a['sifat_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
-						$a['petunjukterakhir'] = $petunjuk[0]->nama;
-						$a['catatan'] = $dispo[0]->catatan;
 						$a['tgl_disposisi'] = date('d F Y', strtotime($dispo[0]->tgl_disposisi));
-						$a['petunjuk'] = $this->persuratan->get_petunjuk_disposisi($surat_id)->result_object();
+						$a['petunjuk'] = $this->persuratan->get_petunjuk_disposisi()->result_object();
 						$a['jenis'] = ucwords($surat[0]->jenis);
 						$a['status'] = ucwords($surat[0]->status);
 					} else {
