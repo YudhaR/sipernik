@@ -349,7 +349,18 @@
                                             <img src="<?php echo base_url('upload/surat_' . $alur) . '/' . $jenis_surat_masuk . "/" . $file_name ?>" height="50" alt="-" />
                                         <?php } ?>
                                     </div>
-                                        <a class="p-l-20"x href="<?php echo base_url('upload/surat_' . $alur) . "/" . $file_name ?>"><?php echo $file_name ?></a>
+                                        <?php if ($alur == "keluar") { ?>
+                                                <a class="p-l-20"x href="<?php echo base_url('upload/surat_' . $alur) . '/' . $jabatan . '/' . $kategori . "/" . $file_name ?>"><?php echo $file_name ?></a>
+                                            <?php } else { 
+                                                        $p = $this->db->query("SELECT jenis FROM ctr_jenis_surat_masuk WHERE jenis_surat_masuk_id=$jenis_surat_masuk_id");
+                                                        $jenis_surat_masuk = $p->result();
+                                                        
+                                                        if (count($jenis_surat_masuk) > 0) {
+                                                            $jenis_surat_masuk = $jenis_surat_masuk[0]->jenis;
+                                                        }
+                                                        ?>
+                                                <a class="p-l-20"x href="<?php echo base_url('upload/surat_' . $alur) . '/' . $jenis_surat_masuk . "/" . $file_name ?>"><?php echo $file_name ?></a>
+                                            <?php } ?>
                                         <input name="ada_file" type="hidden" value="<?php echo $file_name ?>" />
                                     </div>
                                 </div>

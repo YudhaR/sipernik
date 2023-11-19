@@ -84,7 +84,7 @@
                 <div class="image p-t-10">
                   <img src="<?php echo base_url('upload/surat_' . $alur) . '/' . $jenis_surat_masuk . "/" . $file_name ?>" height="50" alt="-" />
                 </div>
-                  <a class="text-center" href="<?php echo base_url('upload/surat_' . $alur) . "/" . $file_name ?>" target="_blank">View / Download</a>
+                  <a class="text-center" href="<?php echo base_url('upload/surat_' . $alur) . '/' . $jenis_surat_masuk . "/" . $file_name ?>" target="_blank">View / Download</a>
                 <?php
                 } else {
 
