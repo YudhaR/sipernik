@@ -69,10 +69,10 @@ class Referensi extends CI_Controller {
 		 }else{
 			 if ($act=='edit') {
 				 $id=$this->encrypt->decode(base64_decode($enc));
-				 $data	= $this->db->get_where('ctr_jenis_surat_masuk',array('id_jenis_surat_masuk'=>$id))->result_object();
+				 $data	= $this->db->get_where('ctr_jenis_surat_masuk',array('jenis_surat_masuk_id'=>$id))->result_object();
 				//  print_r($data);
 				//  die();
-				 $a['enc']=base64_encode($this->encrypt->encode($data[0]->id_jenis_surat_masuk));
+				 $a['enc']=base64_encode($this->encrypt->encode($data[0]->jenis_surat_masuk_id));
 				 $a['jenis']=$data[0]->jenis;
 				 $a['act']='update';
 				 $a['title']	= "Edit Jenis Surat Masuk";
@@ -255,7 +255,7 @@ class Referensi extends CI_Controller {
 		$object = array(
 				'jenis' => $jenis,
 			);
-		$this->db->where('id_jenis_surat_masuk', $id);
+		$this->db->where('jenis_surat_masuk_id', $id);
 		$this->db->update('ctr_jenis_surat_masuk', $object); 
 
 		redirect('Referensi/jenis_surat_masuk','refresh');

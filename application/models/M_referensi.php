@@ -95,7 +95,7 @@ class M_referensi extends CI_Model {
 	}
 	function hapus_jenis_surat_masuk($id)
 	{
-		return $this->db->delete('ctr_jenis_surat_masuk', array('id_jenis_surat_masuk' => $id));
+		return $this->db->delete('ctr_jenis_surat_masuk', array('jenis_surat_masuk_id' => $id));
 	}
 	function hapus_status_surat($id)
 	{

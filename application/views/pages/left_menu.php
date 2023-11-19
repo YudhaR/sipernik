@@ -124,13 +124,13 @@
                             <a href="#" onClick="jalankan('Referensi/status_surat')">Status Surat</a>
                         </li>
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/jenis_surat_masuk')">Jenis Surat (Surat Masuk)</a>
+                            <a href="#" onClick="jalankan('Referensi/jenis_surat_masuk')">Kategori Surat Masuk</a>
                         </li>
                         <li>
                             <a href="#" onClick="jalankan('Referensi/jenis_surat')">Jenis Surat (Surat Keluar)</a>
                         </li>
                         <li>
-                            <a href="#" onClick="jalankan('Referensi/kategori_surat')">Kategori Surat</a>
+                            <a href="#" onClick="jalankan('Referensi/kategori_surat')">Kategori Surat Keluar</a>
                         </li>
                         <li>
                             <a href="#" onClick="jalankan('Referensi/petunjuk_disposisi')">Petunjuk Disposisi</a>

@@ -36,9 +36,9 @@
                                 <i class="fa fa-bars"></i>
                                 </button>
                                 <ul class="dropdown-menu" role="menu" style="left:-100px">
-                                    <li><a href="<?php echo base_url(); ?>Referensi/jenis_surat_masuk/edit/<?php echo base64_encode($this->encrypt->encode($lihat->id_jenis_surat_masuk)) ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-edit"></i> Edit</a></li>
+                                    <li><a href="<?php echo base_url(); ?>Referensi/jenis_surat_masuk/edit/<?php echo base64_encode($this->encrypt->encode($lihat->jenis_surat_masuk_id)) ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-edit"></i> Edit</a></li>
                                     <li class="divider"></li>
-                                    <li><a class="text-red" data-toggle="modal" href="#" data-href="<?php echo base_url(); ?>referensi/jenis_surat_masuk/hapus/<?php echo base64_encode($this->encrypt->encode($lihat->id_jenis_surat_masuk)) ?>" data-target="#confirm-delete" ><i class="fa fa-trash"></i> Hapus</a></li>
+                                    <li><a class="text-red" data-toggle="modal" href="#" data-href="<?php echo base_url(); ?>referensi/jenis_surat_masuk/hapus/<?php echo base64_encode($this->encrypt->encode($lihat->jenis_surat_masuk_id)) ?>" data-target="#confirm-delete" ><i class="fa fa-trash"></i> Hapus</a></li>
                                 </ul>
                               </div>
                           </td>                  		
