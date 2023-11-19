@@ -79,11 +79,15 @@ class Register extends CI_Controller
 			$this->load->vars($data);
 			$this->load->view('pages/pages');
 		} elseif ($act == 'kategori' && !empty($act)) {
-			$surat = $this->persuratan->tampil_surat_kategori($enc);
+			$surat = $this->persuratan->tampil_surat_kategori($alur, $enc);
+			if ($alur == "keluar") {
+				$data['title'] = $surat->result()[0]->kategori;
+			} elseif ($alur == "masuk") {
+				$data['title'] = $surat->result()[0]->jenis;
+			}
 			$data['harus_disposisi'] = $this->persuratan->harus_disposisi('masuk')->num_rows();
 			$data['belum_disposisi'] = $this->persuratan->belum_disposisi()->num_rows();
 			$data['data'] = $surat;
-			$data['title'] = $surat->result()[0]->kategori;
 			$data['page'] = 'admin/surat/list_surat';
 			$this->load->vars($data);
 			$this->load->view('pages/pages');

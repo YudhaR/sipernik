@@ -324,37 +324,69 @@
                     </div>
                 </div>
                 <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="header bg-blue">
-                                <h2>
-                                    Kategori Surat Keluar <i class="fa fa-envelope"></i>
-                                    <small>Berdasarkan Kategori surat</small>
-                                </h2>
-                            </div>
-                            <div class="body">
-                                <ul class="list-group list-group-unbordered">
-                                    <?php
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="header bg-blue">
+                                    <h2>
+                                        Kategori Surat Masuk <i class="fa fa-envelope"></i>
+                                        <small>Berdasarkan Kategori surat</small>
+                                    </h2>
+                                </div>
+                                <div class="body">
+                                    <ul class="list-group list-group-unbordered">
+                                        <?php
 
-                                    $q = $this->db->query("SELECT * FROM ctr_kategori_surat");
-                                    if (empty($q)) {
-                                        echo "<b>Tidak ada data</b> <a class='pull-right'></a>";
-                                    } else {
-                                        foreach ($q->result() as $row) {
+                                        $q = $this->db->query("SELECT * FROM ctr_jenis_surat_masuk");
+                                        if (empty($q)) {
+                                            echo "<b>Tidak ada data</b> <a class='pull-right'></a>";
+                                        } else {
+                                            foreach ($q->result() as $row) {
 
-                                                $jumlah = $this->db->query("SELECT COUNT(surat_id) as jumlah FROM ctr_surat_keluar_baru WHERE kategori_id=$row->id_kategori");
-                                                $jumlah = $jumlah->result();
-                                            
-                                                echo '<li class="list-group-item">';
-                                                echo '<b style="cursor:pointer" onclick="jalankan(\'Register/surat/keluar/kategori/'.$row->id_kategori.'\')">' . $row->kategori . '</b><label class="pull-right">' . $jumlah[0]->jumlah . '</label>';
-                                                echo '</li>';
-                                            
+                                                    $jumlah = $this->db->query("SELECT COUNT(surat_id) as jumlah FROM ctr_surat_masuk WHERE jenis_surat_masuk_id=$row->jenis_surat_masuk_id");
+                                                    $jumlah = $jumlah->result();
+                                                
+                                                    echo '<li class="list-group-item">';
+                                                    echo '<b style="cursor:pointer" onclick="jalankan(\'Register/surat/masuk/kategori/'.$row->jenis_surat_masuk_id.'\')">' . $row->jenis . '</b><label class="pull-right">' . $jumlah[0]->jumlah . '</label>';
+                                                    echo '</li>';
+                                                
+                                            }
                                         }
-                                    }
-                                    ?>
-                                </ul>
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="header bg-blue">
+                                    <h2>
+                                        Kategori Surat Keluar <i class="fa fa-envelope"></i>
+                                        <small>Berdasarkan Kategori surat</small>
+                                    </h2>
+                                </div>
+                                <div class="body">
+                                    <ul class="list-group list-group-unbordered">
+                                        <?php
+
+                                        $q = $this->db->query("SELECT * FROM ctr_kategori_surat");
+                                        if (empty($q)) {
+                                            echo "<b>Tidak ada data</b> <a class='pull-right'></a>";
+                                        } else {
+                                            foreach ($q->result() as $row) {
+
+                                                    $jumlah = $this->db->query("SELECT COUNT(surat_id) as jumlah FROM ctr_surat_keluar_baru WHERE kategori_id=$row->id_kategori");
+                                                    $jumlah = $jumlah->result();
+                                                
+                                                    echo '<li class="list-group-item">';
+                                                    echo '<b style="cursor:pointer" onclick="jalankan(\'Register/surat/keluar/kategori/'.$row->id_kategori.'\')">' . $row->kategori . '</b><label class="pull-right">' . $jumlah[0]->jumlah . '</label>';
+                                                    echo '</li>';
+                                                
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
             <?php endif; ?>

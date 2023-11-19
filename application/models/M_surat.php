@@ -52,7 +52,7 @@ class M_surat extends CI_Model {
 					LEFT JOIN ctr_surat_ordner AS sl ON a.surat_id=sl.surat_id
 					LEFT JOIN ctr_ordner AS l ON sl.ordner_id=l.id
 					".$join."
-					WHERE d2.id IS NULL
+					WHERE d2.id IS NULL 
 					".$surat_ditangani."
 					$val ORDER BY a.surat_id DESC";
 
@@ -126,12 +126,44 @@ class M_surat extends CI_Model {
 		$jumlah = $this->db->query("SELECT COUNT(surat_id) as jumlah FROM ctr_surat_keluar_baru WHERE format_no_surat_id=$jabatan");
 		return $jumlah->result();
 	}
-	function tampil_surat_kategori($kategori){
-		$q= $this->db->query("SELECT a.*,k.kategori FROM ctr_surat_keluar_baru as a 
-							LEFT JOIN ctr_kategori_surat as k on a.kategori_id=k.id_kategori 
-							WHERE kategori_id=$kategori ORDER BY surat_id DESC");
+
+	function tampil_surat_kategori($alur, $kategori) {
+		if ($alur == "masuk") {
+			$jabatan_id=$this->session->userdata('sess_jabatanid');
+			$group_id=$this->session->userdata('sess_idgroup');
+			$surat_ditangani=" ";
+			if($group_id<=2 or $group_id==11 or $group_id==4){
+					$surat_ditangani=" ";
+			}elseif ($group_id>2 AND $alur!="keluar"){
+					$surat_ditangani=" AND (d1.dari=$jabatan_id OR  d1.kepada=$jabatan_id) ";				
+			}
+			if ($alur=="masuk"){
+				$select=",b.sifat_id, b.nama,b.kode,st.jenis,sy.status";
+				$join="LEFT JOIN ctr_sifat_surat AS b ON a.sifat_id=b.sifat_id
+				LEFT JOIN ctr_jenis_surat_masuk AS st ON a.jenis_surat_masuk_id=st.jenis_surat_masuk_id
+				LEFT JOIN ctr_status_surat AS sy ON a.status_id=sy.status_id";
+			}
+			$q =  $this->db->query("SELECT a.*".$select.",d1.dari,d1.kepada,(c.jabatan) AS dari_nama,(e.jabatan) AS kepada_nama, l.id AS ordner_id,l.nama AS nama_bundle, sl.tgl_ordner 
+					FROM ctr_surat_".$alur. " as a
+					LEFT JOIN ctr_disposisi AS d1 ON a.surat_id=d1.surat_id
+					LEFT JOIN ctr_disposisi AS d2 ON a.surat_id=d2.surat_id AND d2.id > d1.id
+					LEFT JOIN ctr_jabatan AS c ON d1.dari=c.id
+					LEFT JOIN ctr_jabatan AS e ON d1.kepada=e.id
+					LEFT JOIN ctr_surat_ordner AS sl ON a.surat_id=sl.surat_id
+					LEFT JOIN ctr_ordner AS l ON sl.ordner_id=l.id
+					".$join."
+					WHERE d2.id IS NULL AND a.jenis_surat_masuk_id = $kategori
+					".$surat_ditangani."
+					ORDER BY a.surat_id DESC");
+		} else {
+			$q = $this->db->query("SELECT a.*,k.kategori FROM ctr_surat_keluar_baru as a 
+				LEFT JOIN ctr_kategori_surat as k on a.kategori_id=k.id_kategori 
+				WHERE kategori_id = $kategori ORDER BY surat_id DESC");
+		}
 		return $q;
 	}
+	
+
 
 
 
