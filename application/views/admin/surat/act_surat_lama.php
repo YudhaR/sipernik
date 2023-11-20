@@ -16,7 +16,7 @@
                                     Nomor Agenda:
                                     <div class="input-group">
                                         <div class="form-line">
-                                            <input type="text" id="nomor_agenda" class="form-control"  name="no_agenda" readonly placeholder="" value="<?php echo $no_agenda;?>" readonly>
+                                            <input type="text" id="nomor_agenda" class="form-control"  name="no_agenda" placeholder="" value="<?php echo $no_agenda;?>">
                                         </div>
                                     </div>       
                                 </div>
