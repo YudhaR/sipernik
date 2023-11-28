@@ -26,7 +26,7 @@
                                             <input type="text" id="format_nomor_agenda" class="form-control col-blue" name="format_nomor_agenda" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-5 col-red">
+                                <div class="col-md-6 col-red">
                                     Tanggal Diterima :
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -66,7 +66,7 @@
                             } else if ($alur == "keluar") {
                             ?>
                                 <p class="col-red">
-                                    Jenis Surat :
+                                    Sifat Surat :
                                 </p>
                                 <select name="jenis_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                     <?php
@@ -87,7 +87,7 @@
                             <?php
                             } ?>
                             </div>
-                             <div class="col-md-5 col-red">
+                             <div class="col-md-6 col-red">
                                     Tanggal surat :
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -136,7 +136,7 @@
                             <?php endif?>
                             <?php if ($alur == "masuk") {
                                 ?>
-                                <div class="col-md-3 col-red">
+                                <div class="col-md-4 col-red">
                                     <p class="">
                                         Status Surat :
                                     </p>
@@ -157,7 +157,7 @@
                                         ?>
                                     </select>
                                 </div>
-                                <div class="col-md-3 col-red">
+                                <div class="col-md-4 col-red">
                                     <p class="">
                                         Jenis Surat Masuk:
                                     </p>
@@ -178,10 +178,10 @@
                                         ?>
                                     </select>
                                 </div>
-                        </div>            
-                            <?php
+                                <?php
                             }
                             ?>
+                        </div>            
                         <div class="row clearfix">
                             <div class="col-md-6 col-red">
                                 Pengirim / Dari :

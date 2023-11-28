@@ -81,7 +81,7 @@
                             } else if ($alur == "keluar") {
                             ?>
                                 <p class="col-red">
-                                    Jenis Surat :
+                                    Sifat Surat :
                                 </p>
                                 <select name="jenis_surat" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
                                     <?php
@@ -179,7 +179,7 @@
                                 </div>
                             </div>
                             <?php if ($alur == 'keluar') : ?>
-                                <div class="col-md-4 col-red">
+                                <div class="col-md-3 col-red">
                                     <input id="check_nomor" type="checkbox" <?php #echo ($act!='edit' ? "checked" : " " );
                                                                             ?>> Format Surat <?php echo $alur ?>
                                     <select name="format_kode" id="kode" class="form-control show-tick" data-live-search="true" style="width: 100%;" required>
@@ -193,7 +193,7 @@
                                         ?>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     Format Surat :
                                     <div class="input-group">
                                         <input type="text" id="format_nomor_surat" class="form-control col-blue" name="format_nomor_surat" readonly>
@@ -244,10 +244,10 @@
                                         ?>
                                     </select>
                                 </div>
-                        </div>            
-                            <?php
+                                <?php
                             }
                             ?>
+                        </div>            
                         <div class="row clearfix">
                             <div class="col-md-6 col-red">
                                 Pengirim / Dari :

@@ -179,7 +179,7 @@ class Referensi extends CI_Controller {
        if ($act==NULL) {
 			$a['data']	= $this->referensi->tampil_sifat()->result_object();
 			$a['page']	= "admin/referensi/sifat_surat";
-			$a['title']	= "Referensi Sifat Surat";
+			$a['title']	= "Referensi Sifat Surat Masuk";
 			$this->load->vars($a);
 			$a['harus_disposisi']=$this->persuratan->harus_disposisi('masuk')->num_rows();
 			$a['belum_disposisi']=$this->persuratan->belum_disposisi()->num_rows();
@@ -193,7 +193,7 @@ class Referensi extends CI_Controller {
 				$a['kode']=$data[0]->kode;
 				$a['nama']=$data[0]->nama;
 				$a['act']='update';
-				$a['title']	= "Edit Sifat Surat";
+				$a['title']	= "Edit Sifat Surat Masuk";
 				$this->load->vars($a);
 				$this->load->view('admin/referensi/act_sifat_surat',$a);
 			}
@@ -202,7 +202,7 @@ class Referensi extends CI_Controller {
 				$a['nama']='';
 				$a['enc']='';
 				$a['act']='insert';
-				$a['title']	= "Tambah Sifat Surat";
+				$a['title']	= "Tambah Sifat Surat Masuk";
 				$this->load->vars($a);
 				$this->load->view('admin/referensi/act_sifat_surat',$a);
 			}

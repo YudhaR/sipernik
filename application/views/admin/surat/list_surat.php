@@ -17,6 +17,8 @@
     title {
         display: none
     }
+
+
 </style>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -75,7 +77,8 @@
                                 <th class="align-center">Tempat<br>Ordner/Box</th>
                                 <th class="align-center">Status Disposisi</th>
                             <?php endif ?>
-                            <th class="all allalign-center">Aksi</th>
+                            <th class="align-center">File</th>
+                            <th class="align-center">Aksi</th>
                         </tr>
                     </thead>
 
@@ -87,12 +90,41 @@
                     <?php if ($alur == 'masuk') : ?>
                         <col width="13%">
                         <col width="10%">
+                        <col width="10%">
+                    <?php endif ?>
+                    <?php if ($alur != 'masuk') : ?>
+                        <col width="23%">
                     <?php endif ?>
                     <col width="5%">
                     <tbody>
                         <?php if ($data->num_rows >= 0) {
                             $no = $data->num_rows();
                             foreach ($data->result() as $t) {
+                                $file_name = $t->file_name;
+                                if ($alur == 'masuk') {
+                                    $jenis_surat_masuk_id = $t->jenis_surat_masuk_id;
+                                    $p = $this->db->query("SELECT jenis FROM ctr_jenis_surat_masuk WHERE jenis_surat_masuk_id=$jenis_surat_masuk_id");
+                                    $jenis_surat_masuk = $p->result();
+                                    
+                                    if (count($jenis_surat_masuk) > 0) {
+                                        $path = $jenis_surat_masuk[0]->jenis;
+                                    }
+                                } else if ($alur == 'keluar' && $act != "keluar"){
+                                    $kategori_id = $t->kategori_id;
+                                    $p = $this->db->query("SELECT kategori FROM ctr_kategori_surat WHERE id_kategori=$kategori_id");
+                                    $kategori_surat = $p->result();
+                                    
+                                    if (count($kategori_surat) > 0) {
+                                        $path = $kategori_surat[0]->kategori;
+                                    }
+                                    $format_no_surat_id = $t->format_no_surat_id;
+                                    $q = $this->db->query("SELECT jabatan FROM format_nomor_surat WHERE id=$format_no_surat_id");
+                                    $format_surat = $q->result();
+                                    
+                                    if (count($format_surat) > 0) {
+                                        $jabt = $format_surat[0]->jabatan;
+                                    }
+                                }
                                 echo '<tr>';
                                 echo '<td><a class="' . $btn . '">' . $no-- . '</a></td>';
 
@@ -110,10 +142,16 @@
                                 } else {
                                     echo '<td align="center" data-sort="' . $t->tgl_kirim . '">' . ($t->tgl_kirim != "" ? $this->tanggalhelper->convertDate($t->tgl_kirim) : "-") . '</td>';
                                 }
-
+                                if ($alur == 'keluar' && $act != "keluar"){
+                                    echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $jabt . '/' . $path . "/" . $file_name . '" > View / Download</a><td>';
+                                } else if ($alur == 'keluar') {
+                                    echo '<td align="center" ><a href="' . base_url('upload/surat_' . $alur) . '/'  . $file_name . '" > View / Download</a><td>';
+                                } else if ($alur == 'masuk') {
+                                    echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $path . '/'  . $file_name . '" > View / Download</a><td>';
+                                }
                                 if ($this->session->userdata('sess_idgroup') <= 2 or $this->session->userdata('sess_idgroup') == 11) {
-                                    echo '<td class="align-center">
-                                                <li class="dropdown" style="list-style:none">
+                                    echo '<td class="align-center" >
+                                                <li class="dropdown" style="list-style:none" >
                                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i  class="fa fa-navicon"></i> </a>
                                                 <ul class="dropdown-menu pull-right">';
                                     if ($act != "keluar") {
