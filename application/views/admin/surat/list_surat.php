@@ -78,6 +78,7 @@
                                 <th class="align-center">Status Disposisi</th>
                             <?php endif ?>
                             <th class="align-center">File</th>
+                            <th class="align-center"></th>
                             <th class="align-center">Aksi</th>
                         </tr>
                     </thead>
@@ -128,9 +129,9 @@
                                 echo '<tr>';
                                 echo '<td><a class="' . $btn . '">' . $no-- . '</a></td>';
 
-                                echo '<td>' . $t->no_surat . '</td>';
+                                echo '<td align="center">' . $t->no_surat . '</td>';
                                 echo '<td align="center" data-sort="' . $t->tgl_surat . '">' . $this->tanggalhelper->convertDate($t->tgl_surat) . '</td>';
-                                echo '<td>' . $t->perihal . '</td>';
+                                echo '<td align="center">' . $t->perihal . '</td>';
                                 if ($alur == 'masuk') {
                                     echo '<td align="center" data-sort="' . $t->tgl_terima . '">' . $this->tanggalhelper->convertDate($t->tgl_terima) . '</td>';
                                     echo '<td align="center">' . ($t->ordner_id == NULL && $this->session->userdata('sess_idgroup') <= 2 || $this->session->userdata('sess_idgroup') == 11  ? '<a class="col-red" href="' . base_url("Register/surat/" . $alur . "/ordner") . '/' . base64_encode($this->encrypt->encode($t->surat_id)) . '/tambah' . '" data-toggle="modal" data-target="#popUpWindow"><i class="icon fa fa-edit"> </i> Belum di box</a>' : $t->nama_bundle) . '</td>';
@@ -150,7 +151,7 @@
                                     echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $path . '/'  . $file_name . '" > View / Download</a><td>';
                                 }
                                 if ($this->session->userdata('sess_idgroup') <= 2 or $this->session->userdata('sess_idgroup') == 11) {
-                                    echo '<td class="align-center" >
+                                    echo '<td align="center" class="align-center">
                                                 <li class="dropdown" style="list-style:none" >
                                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i  class="fa fa-navicon"></i> </a>
                                                 <ul class="dropdown-menu pull-right">';

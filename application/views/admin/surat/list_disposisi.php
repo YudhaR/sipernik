@@ -114,7 +114,10 @@
                 <?php if ($this->session->userdata('sess_idgroup') == $this->session->userdata('sess_jabatanid')) : ?>
                   <ul class="header-dropdown pull-left m-t-10 m-l--30">
                     <?php if ($list_disposisi->num_rows() > 0) : ?>
-                      <a class="btn btn-primary" href="<?php echo base_url('Register/surat/masuk/disposisi/' . $enc . '/preview'); ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-file-word-o"></i> Cetak Disposisi</a>
+                      <a class="btn btn-primary" href="<?php echo base_url('Register/surat/masuk/disposisi/' . $enc . '/cetak_disposisi_surat'); ?>"><i class="fa fa-file-word-o"></i> Cetak Disposisi Doc</a>
+                    <?php endif ?>
+                    <?php if ($list_disposisi->num_rows() > 0) : ?>
+                      <a class="btn btn-primary" href="<?php echo base_url('Register/surat/masuk/disposisi/' . $enc . '/preview'); ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-file-word-o"></i> Cetak Disposisi pdf</a>
                     <?php endif ?>
                     <a class="btn btn-primary" href="<?php echo base_url('Register/surat/masuk/disposisi/' . $enc . '/preview_kosong'); ?>" data-toggle="modal" data-target="#popUpWindow"><i class="fa fa-file-word-o"></i> Cetak Disposisi Kosong</a>
                   </ul>

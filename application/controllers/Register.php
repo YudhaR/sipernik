@@ -462,6 +462,39 @@ class Register extends CI_Controller
 					$a['page']				= "preview_disposisi";
 					$a['title']				= "PREVIEW LEMBAR DISPOSISI";
 					$this->load->view('admin/surat/preview_disposisi', $a);
+				} else if ($act_extra == "cetak_disposisi_surat") {
+					if ($alur == "masuk") {
+						$surat	= $this->persuratan->surat($alur, $surat_id)->result_object();
+						$dispo = $this->persuratan->get_catatan_disposisi($surat_id)->result_object();
+						$a['sifat_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
+						$a['tgl_disposisi'] = tgl_indo($dispo[0]->tgl_disposisi);
+						$a['petunjuk'] = $this->persuratan->get_petunjuk_disposisi()->result_object();
+						$a['jenis'] = ucwords($surat[0]->jenis);
+						$a['status'] = ucwords($surat[0]->status);
+					} else {
+						$surat	= $this->persuratan->surat_baru($alur, $surat_id)->result_object();
+						$a['kategori_surat'] = $surat[0]->kategori;
+						$a['jenis_surat'] = $surat[0]->kode . '/' . $surat[0]->nama;
+					}
+					$a['data']	= $this->persuratan->get_disposisi($surat_id)->result_object();
+					$a['no_agenda'] = $surat[0]->no_agenda;
+					$a['no_surat'] = $surat[0]->no_surat;
+					// $a['balasan'] = $surat[0]->balasan;
+					$a['tgl_surat'] = tgl_indo($surat[0]->tgl_surat);
+					$a['tgl_terima_kirim'] = tgl_indo($surat[0]->tgl_terima);
+					$a['kode'] = ucwords($surat[0]->kode);
+					$a['nama'] = ucwords($surat[0]->nama);
+					$a['pengirim'] = ucwords($surat[0]->pengirim);
+					$a['untuk'] = ucwords($surat[0]->untuk);
+					$a['file_name'] = $surat[0]->file_name;
+					$a['perihal'] = ucfirst($surat[0]->perihal);
+					$a['ket'] = ucfirst($surat[0]->ket);
+					$nama_file_qr = preg_replace('/[^a-zA-Z0-9_.]/', '', $surat[0]->no_agenda);
+					$qrLink = $this->generate_qr->qr_code(base_url() . "Qrscan/st/disposisi/" . $surat_id, "disposisi_" . $nama_file_qr);
+					$a['pictQR'] = $qrLink[0];
+					$a['page']				= "preview_disposisi";
+					$a['title']				= "PREVIEW LEMBAR DISPOSISI";
+					$this->load->view('admin/surat/cetak_disposisi_surat', $a);
 				} else if ($act_extra == "preview_kosong") {
 					if ($alur == "masuk") {
 						$surat	= $this->persuratan->surat($alur, $surat_id)->result_object();

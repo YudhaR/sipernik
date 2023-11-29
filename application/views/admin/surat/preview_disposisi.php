@@ -22,7 +22,8 @@
   @media print {
   body * {
     visibility: hidden;
-    margin: -5px;
+    size: A4;
+    margin: 0;
   }
   @page {
       size: auto; 
