@@ -144,11 +144,11 @@
                                     echo '<td align="center" data-sort="' . $t->tgl_kirim . '">' . ($t->tgl_kirim != "" ? $this->tanggalhelper->convertDate($t->tgl_kirim) : "-") . '</td>';
                                 }
                                 if ($alur == 'keluar' && $act != "keluar"){
-                                    echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $jabt . '/' . $path . "/" . $file_name . '" > View / Download</a><td>';
+                                    echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $jabt . '/' . $path . "/" . $file_name . '" target="_blank"> View / Download</a><td>';
                                 } else if ($alur == 'keluar') {
-                                    echo '<td align="center" ><a href="' . base_url('upload/surat_' . $alur) . '/'  . $file_name . '" > View / Download</a><td>';
+                                    echo '<td align="center" ><a href="' . base_url('upload/surat_' . $alur) . '/'  . $file_name . '" target="_blank"> View / Download</a><td>';
                                 } else if ($alur == 'masuk') {
-                                    echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $path . '/'  . $file_name . '" > View / Download</a><td>';
+                                    echo '<td align="center"><a href="' . base_url('upload/surat_' . $alur) . '/' . $path . '/'  . $file_name . '" target="_blank"> View / Download</a><td>';
                                 }
                                 if ($this->session->userdata('sess_idgroup') <= 2 or $this->session->userdata('sess_idgroup') == 11) {
                                     echo '<td align="center" class="align-center">
